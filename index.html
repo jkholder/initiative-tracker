@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Initiative Tracker — D&D 2024</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Initiative">
+<meta name="theme-color" content="#0b0b18">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiBmaWxsPSIjMGIwYjE4Ii8+PHRleHQgeD0iOTAiIHk9IjExNSIgZm9udC1zaXplPSI5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+4pqU77iPPC90ZXh0Pjwvc3ZnPg==">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiSW5pdGlhdGl2ZSBUcmFja2VyIiwic2hvcnRfbmFtZSI6IkluaXRpYXRpdmUiLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMGIwYjE4IiwidGhlbWVfY29sb3IiOiIjMGIwYjE4Iiwic3RhcnRfdXJsIjoiLiJ9">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0b18;
+  --bg-raised: #12122a;
+  --bg-surface: rgba(255,255,255,0.03);
+  --bg-surface-hover: rgba(255,255,255,0.055);
+  --border: rgba(255,255,255,0.05);
+  --border-focus: rgba(130,120,255,0.45);
+  --text-1: #e8e4f0;
+  --text-2: #9892a6;
+  --text-3: #5e586e;
+  --accent: #7c6aef;
+  --accent-bright: #a594ff;
+  --accent-glow: rgba(124,106,239,0.25);
+  --accent-grad: linear-gradient(135deg,#7c6aef,#a855f7);
+  --green: #34d399;
+  --green-dim: rgba(52,211,153,0.14);
+  --yellow: #fbbf24;
+  --red: #f87171;
+  --red-dim: rgba(248,113,113,0.14);
+  --blue: #60a5fa;
+  --blue-dim: rgba(96,165,250,0.14);
+  --font-d: 'Cinzel',serif;
+  --font-b: 'Outfit',sans-serif;
+  --safe-b: env(safe-area-inset-bottom,0px);
+  --safe-t: env(safe-area-inset-top,0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--text-1);font-family:var(--font-b);min-height:100vh;min-height:100dvh;overscroll-behavior:none;-webkit-font-smoothing:antialiased}
+body{padding-bottom:calc(120px + var(--safe-b))}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:128px 128px}
+#app{position:relative;z-index:1;max-width:700px;margin:0 auto}
+button{font-family:var(--font-b);cursor:pointer;border:none;background:none;color:inherit}
+input{font-family:var(--font-b);color:var(--text-1);background:var(--bg-surface);border:2px solid var(--border);border-radius:10px;padding:12px 14px;font-size:16px;outline:none;width:100%;transition:border-color .15s}
+input:focus{border-color:var(--border-focus)}
+input::placeholder{color:var(--text-3)}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+/* ---- HEADER ---- */
+.header{background:linear-gradient(180deg,rgba(124,106,239,0.06) 0%,transparent 100%);border-bottom:1px solid var(--border);padding:20px 20px 16px;padding-top:calc(20px + var(--safe-t));display:flex;justify-content:space-between;align-items:center}
+.header h1{font-family:var(--font-d);font-size:22px;font-weight:900;letter-spacing:1px}
+.header .sub{color:var(--text-3);font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;margin-top:3px}
+.round-box{text-align:right}
+.round-box .num{color:var(--accent-bright);font-size:30px;font-weight:900;line-height:1;font-family:var(--font-d)}
+.round-box .lbl{color:var(--text-3);font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase}
+
+/* ---- TABS ---- */
+.tab-bar{display:flex;gap:4px;padding:12px 16px 4px}
+.tab-btn{flex:1;padding:10px;border-radius:10px;font-size:14px;font-weight:600;color:var(--text-3);background:var(--bg-surface);border:2px solid transparent;transition:all .15s}
+.tab-btn.active{color:var(--accent-bright);border-color:var(--border-focus);background:rgba(124,106,239,0.08)}
+.tab-btn:active{transform:scale(0.97)}
+
+/* ---- ACTIVE BANNER ---- */
+.active-banner{margin:12px 16px 8px;padding:16px 20px;background:linear-gradient(135deg,rgba(124,106,239,0.16),rgba(168,85,247,0.1));border:1px solid var(--border-focus);border-radius:14px;display:flex;align-items:center;justify-content:space-between;animation:slideDown .25s ease-out}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.active-banner .lbl{color:var(--accent-bright);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px}
+.active-banner .nm{color:var(--text-1);font-size:20px;font-weight:800;font-family:var(--font-d)}
+.turn-btns{display:flex;gap:8px}
+.turn-btn{width:46px;height:46px;border-radius:13px;border:2px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.04);color:var(--text-2);font-size:17px;display:flex;align-items:center;justify-content:center;transition:all .12s}
+.turn-btn:active{transform:scale(0.92)}
+.turn-btn.go{border:none;background:var(--accent-grad);color:#fff;box-shadow:0 4px 18px var(--accent-glow)}
+
+/* ---- CREATURE ROW ---- */
+.creature-list{padding:8px 16px}
+.c-row{position:relative;background:var(--bg-surface);border:2px solid var(--border);border-radius:14px;padding:13px 14px;margin-bottom:8px;transition:all .2s;animation:rowIn .2s ease-out}
+@keyframes rowIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+.c-row.active{background:linear-gradient(135deg,rgba(124,106,239,0.12),rgba(168,85,247,0.07));border-color:var(--border-focus)}
+.c-row.dead{opacity:0.4}
+.c-row .bar{position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:55%;background:var(--accent-grad);border-radius:0 4px 4px 0}
+.c-row .inner{display:flex;align-items:center;gap:10px}
+.init-badge{min-width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);color:var(--text-2);font-size:17px;font-weight:800;transition:all .15s;flex-shrink:0}
+.c-row.active .init-badge{background:var(--accent-grad);color:#fff}
+.init-badge:active{transform:scale(0.92)}
+.c-info{flex:1;min-width:0}
+.c-name-row{display:flex;align-items:center;gap:7px}
+.c-name{font-size:15px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.c-type{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;flex-shrink:0;letter-spacing:0.5px}
+.c-conditions{display:flex;gap:3px;flex-wrap:wrap;margin-top:5px}
+.c-cond{font-size:10px;font-weight:600;padding:2px 6px;border-radius:5px}
+.c-ac{display:flex;flex-direction:column;align-items:center;min-width:36px;flex-shrink:0}
+.ac-shield{width:34px;height:38px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--yellow);position:relative}
+.ac-shield::before{content:'';position:absolute;inset:0;background:rgba(251,191,36,0.08);border:1.5px solid rgba(251,191,36,0.25);border-radius:4px 4px 10px 10px;clip-path:polygon(50% 0%,100% 0%,100% 65%,50% 100%,0% 65%,0% 0%)}
+.ac-label{font-size:9px;font-weight:700;color:var(--text-3);letter-spacing:1px;text-transform:uppercase;margin-top:1px}
+.c-hp-btn{padding:3px;display:flex;flex-direction:column;align-items:center;min-width:56px;flex-shrink:0}
+.hp-bar{width:48px;height:7px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden}
+.hp-fill{height:100%;border-radius:4px;transition:width .3s ease}
+.hp-text{font-size:12px;font-weight:700;margin-top:2px}
+.c-actions{display:flex;gap:3px;flex-shrink:0}
+.c-act{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,0.03);color:var(--text-3);font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .12s}
+.c-act:active{transform:scale(0.9)}
+.c-act.has{background:rgba(124,106,239,0.12);color:var(--accent-bright)}
+
+/* Death Saves */
+.death-saves{display:flex;gap:10px;align-items:center;margin-top:5px}
+.ds-group{display:flex;align-items:center;gap:3px}
+.ds-label{font-size:11px;margin-right:1px}
+.ds-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--text-3);background:transparent;transition:all .12s}
+.ds-dot:active{transform:scale(0.85)}
+.ds-dot.suc{border-color:var(--green)}
+.ds-dot.suc.filled{background:var(--green)}
+.ds-dot.fail{border-color:var(--red)}
+.ds-dot.fail.filled{background:var(--red)}
+
+/* ---- EMPTY STATE ---- */
+.empty{text-align:center;padding:50px 20px;color:var(--text-3)}
+.empty .icon{font-size:44px;margin-bottom:14px;opacity:0.45}
+.empty .t{font-size:15px;font-weight:600;color:var(--text-2);margin-bottom:4px}
+
+/* ---- ROSTER ---- */
+.roster-list{padding:8px 16px}
+.r-row{display:flex;align-items:center;gap:12px;background:var(--bg-surface);border:2px solid var(--border);border-radius:14px;padding:13px 14px;margin-bottom:8px;animation:rowIn .2s ease-out}
+.r-row .r-info{flex:1;min-width:0}
+.r-row .r-name{font-size:15px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.r-row .r-detail{font-size:12px;color:var(--text-3);margin-top:2px}
+.r-actions{display:flex;gap:4px}
+.r-act{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.04);color:var(--text-3);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .12s}
+.r-act:active{transform:scale(0.9)}
+.r-act.add{background:var(--green-dim);color:var(--green)}
+
+/* ---- BOTTOM BAR ---- */
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;z-index:50;background:linear-gradient(180deg,transparent,var(--bg) 18%);padding:16px 16px;padding-bottom:calc(20px + var(--safe-b))}
+.bottom-inner{display:flex;gap:8px;max-width:700px;margin:0 auto}
+.btn-main{flex:1;padding:15px;border-radius:13px;font-size:15px;font-weight:700;text-align:center;transition:all .12s}
+.btn-main:active{transform:scale(0.97)}
+.btn-main.accent{background:var(--accent-grad);color:#fff;box-shadow:0 4px 22px var(--accent-glow)}
+.btn-main.green{border:2px solid rgba(52,211,153,0.35);background:var(--green-dim);color:var(--green)}
+.btn-main.red{border:2px solid rgba(248,113,113,0.35);background:var(--red-dim);color:var(--red)}
+.btn-main.ghost{border:2px solid var(--border);background:transparent;color:var(--text-3)}
+.btn-main:disabled{opacity:0.35;cursor:default;transform:none}
+
+/* ---- MODAL ---- */
+.modal-overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.72);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .15s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--bg-raised);border:1px solid var(--border);border-radius:18px;padding:26px;width:100%;max-width:440px;max-height:82vh;overflow-y:auto;animation:modalIn .2s ease-out}
+@keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal h3{font-family:var(--font-d);font-size:19px;font-weight:800;margin-bottom:18px;color:var(--text-1)}
+.modal-sub{color:var(--text-3);font-size:13px;margin:-12px 0 18px}
+.modal-close{position:absolute;top:18px;right:18px;font-size:22px;color:var(--text-3);background:none;border:none;cursor:pointer;padding:4px}
+
+/* Type Selector */
+.type-row{display:flex;gap:6px;margin-bottom:14px}
+.type-btn{flex:1;padding:10px;border-radius:10px;font-size:13px;font-weight:700;border:2px solid var(--border);background:var(--bg-surface);color:var(--text-3);transition:all .12s}
+.type-btn:active{transform:scale(0.96)}
+.type-btn.sel{color:var(--text-1)}
+
+/* Form */
+.field-row{display:flex;gap:10px;margin-bottom:14px}
+.field-row input{flex:1}
+.modal-btns{display:flex;gap:10px;margin-top:18px}
+.modal-btns button{flex:1;padding:14px;border-radius:12px;font-size:15px;font-weight:700}
+.mbtn-cancel{border:2px solid var(--border);color:var(--text-2)}
+.mbtn-primary{background:var(--accent-grad);color:#fff}
+.mbtn-green{background:var(--green);color:#0b0b18}
+
+/* Condition Grid */
+.cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.cond-btn{display:flex;align-items:center;gap:7px;padding:9px 11px;border-radius:9px;border:2px solid var(--border);background:var(--bg-surface);color:var(--text-3);font-size:13px;font-weight:600;transition:all .12s}
+.cond-btn:active{transform:scale(0.96)}
+.cond-btn.on{color:var(--text-1)}
+.cond-icon{font-size:15px}
+
+/* HP Editor Modes */
+.hp-modes{display:flex;gap:7px;margin-bottom:14px}
+.hp-mode{flex:1;padding:10px;border-radius:10px;font-size:13px;font-weight:700;border:2px solid var(--border);background:var(--bg-surface);color:var(--text-3);transition:all .12s}
+.hp-mode.sel{color:var(--text-1)}
+.hp-input{text-align:center;font-size:28px;font-weight:800;margin-bottom:14px}
+
+/* Confirm dialog */
+.confirm-text{color:var(--text-2);font-size:14px;line-height:1.6;margin-bottom:18px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// =====================================================
+// DATA & STATE
+// =====================================================
+const TYPES = [
+  { label:'PC', color:'#60a5fa', bg:'rgba(96,165,250,0.13)' },
+  { label:'Ally', color:'#34d399', bg:'rgba(52,211,153,0.13)' },
+  { label:'Enemy', color:'#f87171', bg:'rgba(248,113,113,0.13)' },
+];
+
+const CONDITIONS = [
+  { name:'Blinded', icon:'👁', color:'#6b7280' },
+  { name:'Charmed', icon:'💜', color:'#c084fc' },
+  { name:'Deafened', icon:'🔇', color:'#6b7280' },
+  { name:'Exhaustion', icon:'💤', color:'#fbbf24' },
+  { name:'Frightened', icon:'😨', color:'#a78bfa' },
+  { name:'Grappled', icon:'🤜', color:'#f97316' },
+  { name:'Incapacitated', icon:'⛔', color:'#ef4444' },
+  { name:'Invisible', icon:'👻', color:'#94a3b8' },
+  { name:'Paralyzed', icon:'⚡', color:'#fbbf24' },
+  { name:'Petrified', icon:'🪨', color:'#78716c' },
+  { name:'Poisoned', icon:'☠️', color:'#22c55e' },
+  { name:'Prone', icon:'⬇', color:'#f97316' },
+  { name:'Restrained', icon:'⛓', color:'#f97316' },
+  { name:'Stunned', icon:'💫', color:'#fbbf24' },
+  { name:'Unconscious', icon:'💀', color:'#ef4444' },
+  { name:'Concentrating', icon:'🔮', color:'#818cf8' },
+];
+
+let state = {
+  creatures: [],
+  activeIndex: -1,
+  round: 0,
+  combatStarted: false,
+  tab: 'combat', // 'combat' | 'roster'
+  roster: [],
+  modal: null, // null | { type, data }
+};
+
+function uid() { return Math.random().toString(36).slice(2,10); }
+function saveRoster() { try { localStorage.setItem('dnd_roster', JSON.stringify(state.roster)); } catch(e){} }
+function loadRoster() { try { const d = localStorage.getItem('dnd_roster'); if(d) state.roster = JSON.parse(d); } catch(e){} }
+function saveEncounter() { try { localStorage.setItem('dnd_encounter', JSON.stringify({ creatures:state.creatures, activeIndex:state.activeIndex, round:state.round, combatStarted:state.combatStarted })); } catch(e){} }
+function loadEncounter() { try { const d = localStorage.getItem('dnd_encounter'); if(d){ const p=JSON.parse(d); state.creatures=p.creatures||[]; state.activeIndex=p.activeIndex??-1; state.round=p.round||0; state.combatStarted=p.combatStarted||false; } } catch(e){} }
+
+function getSorted() { return [...state.creatures].sort((a,b) => b.initiative - a.initiative || a.name.localeCompare(b.name)); }
+
+// =====================================================
+// RENDER ENGINE
+// =====================================================
+function render() {
+  const app = document.getElementById('app');
+  const sorted = getSorted();
+  const activeCreature = state.combatStarted && sorted[state.activeIndex] ? sorted[state.activeIndex] : null;
+
+  let html = '';
+
+  // Header
+  html += `<div class="header"><div><h1>⚔️ Initiative</h1><div class="sub">D&D 2024 Tracker</div></div>`;
+  if (state.combatStarted) {
+    html += `<div class="round-box"><div class="num">${state.round}</div><div class="lbl">Round</div></div>`;
+  }
+  html += `</div>`;
+
+  // Tabs
+  html += `<div class="tab-bar">
+    <button class="tab-btn${state.tab==='combat'?' active':''}" onclick="switchTab('combat')">⚔️ Combat</button>
+    <button class="tab-btn${state.tab==='roster'?' active':''}" onclick="switchTab('roster')">📋 Roster</button>
+  </div>`;
+
+  if (state.tab === 'combat') {
+    // Active Banner
+    if (activeCreature) {
+      html += `<div class="active-banner">
+        <div><div class="lbl">Current Turn</div><div class="nm">${esc(activeCreature.name)}</div></div>
+        <div class="turn-btns">
+          <button class="turn-btn" onclick="prevTurn()">◀</button>
+          <button class="turn-btn go" onclick="nextTurn()">▶</button>
+        </div>
+      </div>`;
+    }
+
+    // Creature List
+    html += `<div class="creature-list">`;
+    if (sorted.length === 0) {
+      html += `<div class="empty"><div class="icon">⚔️</div><div class="t">No combatants yet</div><div>Add creatures or pull from your roster</div></div>`;
+    } else {
+      sorted.forEach((c, i) => {
+        const t = TYPES[c.type];
+        const isActive = state.combatStarted && i === state.activeIndex;
+        const isDead = c.maxHp !== null && c.hp === 0;
+        const hpPct = c.maxHp ? Math.max(0, Math.min(100, (c.hp / c.maxHp) * 100)) : null;
+        const hpCol = hpPct > 60 ? 'var(--green)' : hpPct > 30 ? 'var(--yellow)' : 'var(--red)';
+
+        html += `<div class="c-row${isActive?' active':''}${isDead?' dead':''}">`;
+        if (isActive) html += `<div class="bar"></div>`;
+        html += `<div class="inner">`;
+
+        // Init badge
+        html += `<button class="init-badge" onclick="openInitEdit('${c.id}')">${c.initiative}</button>`;
+
+        // Info
+        html += `<div class="c-info"><div class="c-name-row">`;
+        html += `<span class="c-name">${esc(c.name)}</span>`;
+        html += `<span class="c-type" style="color:${t.color};background:${t.bg}">${t.label}</span>`;
+        html += `</div>`;
+
+        // Conditions
+        if (c.conditions.length > 0) {
+          html += `<div class="c-conditions">`;
+          c.conditions.forEach(cn => {
+            const cd = CONDITIONS.find(x => x.name === cn);
+            if (cd) html += `<span class="c-cond" style="color:${cd.color};background:${cd.color}18">${cd.icon} ${cd.name}</span>`;
+          });
+          html += `</div>`;
+        }
+
+        // Death Saves
+        if (isDead && c.type === 0) {
+          html += renderDeathSaves(c);
+        }
+
+        html += `</div>`; // c-info
+
+        // AC
+        if (c.ac !== null) {
+          html += `<div class="c-ac"><div class="ac-shield">${c.ac}</div><div class="ac-label">AC</div></div>`;
+        }
+
+        // HP
+        if (c.maxHp !== null) {
+          html += `<button class="c-hp-btn" onclick="openHpEdit('${c.id}')">`;
+          html += `<div class="hp-bar"><div class="hp-fill" style="width:${hpPct}%;background:${hpCol}"></div></div>`;
+          html += `<span class="hp-text" style="color:${hpCol}">${c.hp}${c.tempHp>0?`<span style="color:var(--blue)">+${c.tempHp}</span>`:''}/${c.maxHp}</span>`;
+          html += `</button>`;
+        }
+
+        // Actions
+        html += `<div class="c-actions">`;
+        html += `<button class="c-act${c.conditions.length>0?' has':''}" onclick="openConditions('${c.id}')" title="Conditions">⚡</button>`;
+        html += `<button class="c-act" onclick="confirmRemoveCreature('${c.id}')" title="Remove">✕</button>`;
+        html += `</div>`;
+
+        html += `</div></div>`; // inner, c-row
+      });
+    }
+    html += `</div>`;
+  } else {
+    // ROSTER TAB
+    html += `<div class="roster-list">`;
+    if (state.roster.length === 0) {
+      html += `<div class="empty"><div class="icon">📋</div><div class="t">Roster is empty</div><div>Save characters to quickly add them to encounters</div></div>`;
+    } else {
+      state.roster.forEach(r => {
+        const t = TYPES[r.type];
+        html += `<div class="r-row">`;
+        html += `<div class="r-info">`;
+        html += `<div class="r-name">${esc(r.name)} <span class="c-type" style="color:${t.color};background:${t.bg}">${t.label}</span></div>`;
+        html += `<div class="r-detail">${r.maxHp !== null ? `HP: ${r.maxHp}` : 'No HP set'}${r.ac !== null ? ` · AC: ${r.ac}` : ''}${r.defaultInit ? ` · Init: ${r.defaultInit}` : ''}</div>`;
+        html += `</div>`;
+        html += `<div class="r-actions">`;
+        html += `<button class="r-act add" onclick="addFromRoster('${r.id}')" title="Add to combat">＋</button>`;
+        html += `<button class="r-act" onclick="openEditRoster('${r.id}')" title="Edit">✎</button>`;
+        html += `<button class="r-act" onclick="confirmRemoveRoster('${r.id}')" title="Delete">✕</button>`;
+        html += `</div>`;
+        html += `</div>`;
+      });
+    }
+    html += `</div>`;
+  }
+
+  // Bottom Bar
+  html += `<div class="bottom-bar"><div class="bottom-inner">`;
+  if (state.tab === 'combat') {
+    html += `<button class="btn-main accent" onclick="openAddCreature()">+ Add Creature</button>`;
+    if (!state.combatStarted) {
+      html += `<button class="btn-main green" onclick="startCombat()"${state.creatures.length===0?' disabled':''}>▶ Start</button>`;
+      if (state.creatures.length > 0) html += `<button class="btn-main ghost" onclick="confirmClearAll()">Clear</button>`;
+    } else {
+      html += `<button class="btn-main red" onclick="endCombat()">⏹ End</button>`;
+    }
+  } else {
+    html += `<button class="btn-main accent" onclick="openAddRoster()">+ New Character</button>`;
+  }
+  html += `</div></div>`;
+
+  // Modal
+  if (state.modal) {
+    html += renderModal();
+  }
+
+  app.innerHTML = html;
+}
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function renderDeathSaves(c) {
+  const ds = c.deathSaves;
+  let h = `<div class="death-saves">`;
+  h += `<div class="ds-group"><span class="ds-label" style="color:var(--green)">✓</span>`;
+  for (let i=0; i<3; i++) {
+    h += `<button class="ds-dot suc${i<ds.successes?' filled':''}" onclick="toggleDS('${c.id}','s',${i})"></button>`;
+  }
+  h += `</div><div class="ds-group"><span class="ds-label" style="color:var(--red)">✗</span>`;
+  for (let i=0; i<3; i++) {
+    h += `<button class="ds-dot fail${i<ds.failures?' filled':''}" onclick="toggleDS('${c.id}','f',${i})"></button>`;
+  }
+  h += `</div></div>`;
+  return h;
+}
+
+function renderModal() {
+  const m = state.modal;
+  let inner = '';
+
+  switch (m.type) {
+    case 'addCreature':
+    case 'editRoster':
+    case 'addRoster': {
+      const isRoster = m.type === 'addRoster' || m.type === 'editRoster';
+      const isEdit = m.type === 'editRoster';
+      const title = isEdit ? 'Edit Character' : isRoster ? 'New Roster Character' : 'Add Creature';
+      const d = m.data || {};
+      inner += `<h3>${title}</h3>`;
+      inner += `<div class="type-row">`;
+      TYPES.forEach((t, i) => {
+        const sel = (d.type ?? 0) === i;
+        inner += `<button class="type-btn${sel?' sel':''}" style="${sel?`color:${t.color};border-color:${t.color};background:${t.bg}`:''}" onclick="modalSetType(${i})">${t.label}</button>`;
+      });
+      inner += `</div>`;
+      inner += `<input id="m-name" placeholder="Name" value="${esc(d.name||'')}" onkeydown="if(event.key==='Enter')modalSubmit()">`;
+      inner += `<div class="field-row" style="margin-top:12px">`;
+      inner += `<input id="m-init" placeholder="${isRoster?'Default Init':'Initiative'}" type="number" inputmode="numeric" value="${d.initiative??d.defaultInit??''}" onkeydown="if(event.key==='Enter')modalSubmit()">`;
+      inner += `<input id="m-ac" placeholder="AC" type="number" inputmode="numeric" value="${d.ac??''}" onkeydown="if(event.key==='Enter')modalSubmit()">`;
+      inner += `<input id="m-hp" placeholder="Max HP" type="number" inputmode="numeric" value="${d.maxHp??''}" onkeydown="if(event.key==='Enter')modalSubmit()">`;
+      inner += `</div>`;
+      if (!isRoster) {
+        inner += `<div style="margin-top:4px;margin-bottom:-4px"><button style="color:var(--accent-bright);font-size:13px;font-weight:600;padding:6px 0" onclick="openSaveToRosterFromAdd()">💾 Also save to roster</button></div>`;
+      }
+      inner += `<div class="modal-btns">`;
+      inner += `<button class="mbtn-cancel" onclick="closeModal()">Cancel</button>`;
+      if (isRoster && !isEdit) {
+        inner += `<button class="mbtn-green" onclick="modalSubmit()">Save to Roster</button>`;
+      } else if (isEdit) {
+        inner += `<button class="mbtn-primary" onclick="modalSubmit()">Update</button>`;
+      } else {
+        inner += `<button class="mbtn-primary" onclick="modalSubmit()">Add</button>`;
+      }
+      inner += `</div>`;
+      break;
+    }
+    case 'conditions': {
+      const c = state.creatures.find(x => x.id === m.data.id);
+      if (!c) break;
+      inner += `<h3>Conditions</h3><div class="modal-sub">${esc(c.name)}</div>`;
+      inner += `<div class="cond-grid">`;
+      CONDITIONS.forEach(cd => {
+        const on = c.conditions.includes(cd.name);
+        inner += `<button class="cond-btn${on?' on':''}" style="${on?`color:${cd.color};border-color:${cd.color};background:${cd.color}18`:''}" onclick="toggleCondition('${c.id}','${cd.name}')"><span class="cond-icon">${cd.icon}</span>${cd.name}</button>`;
+      });
+      inner += `</div>`;
+      inner += `<div class="modal-btns" style="margin-top:20px"><button class="mbtn-primary" style="flex:1" onclick="closeModal()">Done</button></div>`;
+      break;
+    }
+    case 'hpEdit': {
+      const c = state.creatures.find(x => x.id === m.data.id);
+      if (!c) break;
+      const mode = m.data.mode || 'damage';
+      const modes = [{k:'damage',l:'Damage',c:'var(--red)'},{k:'heal',l:'Heal',c:'var(--green)'},{k:'temp',l:'Temp HP',c:'var(--blue)'}];
+      inner += `<h3>${esc(c.name)}</h3>`;
+      inner += `<div class="modal-sub">HP: ${c.hp}/${c.maxHp}${c.tempHp>0?` (+${c.tempHp} temp)`:''}</div>`;
+      inner += `<div class="hp-modes">`;
+      modes.forEach(md => {
+        const sel = mode === md.k;
+        inner += `<button class="hp-mode${sel?' sel':''}" style="${sel?`color:${md.c};border-color:${md.c};background:${md.c}18`:''}" onclick="hpSetMode('${md.k}')">${md.l}</button>`;
+      });
+      inner += `</div>`;
+      const col = modes.find(md=>md.k===mode).c;
+      inner += `<input class="hp-input" id="m-hp-val" type="number" inputmode="numeric" placeholder="0" value="${m.data.amount||''}" style="border-color:${col}44" onkeydown="if(event.key==='Enter')applyHp()">`;
+      inner += `<button class="mbtn-primary" style="width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:700;background:${col};color:${mode==='heal'||mode==='temp'?'#0b0b18':'#fff'}" onclick="applyHp()">Apply ${modes.find(md=>md.k===mode).l}</button>`;
+      break;
+    }
+    case 'initEdit': {
+      const c = state.creatures.find(x => x.id === m.data.id);
+      if (!c) break;
+      inner += `<h3>${esc(c.name)}</h3>`;
+      inner += `<input class="hp-input" id="m-init-val" type="number" inputmode="numeric" value="${c.initiative}" onkeydown="if(event.key==='Enter')applyInit()">`;
+      inner += `<button class="mbtn-primary" style="width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:700" onclick="applyInit()">Update Initiative</button>`;
+      break;
+    }
+    case 'confirm': {
+      inner += `<h3>${m.data.title}</h3>`;
+      inner += `<div class="confirm-text">${m.data.message}</div>`;
+      inner += `<div class="modal-btns">`;
+      inner += `<button class="mbtn-cancel" onclick="closeModal()">Cancel</button>`;
+      inner += `<button class="mbtn-primary" style="background:var(--red)" onclick="confirmAction()">${m.data.confirmLabel||'Confirm'}</button>`;
+      inner += `</div>`;
+      break;
+    }
+  }
+
+  return `<div class="modal-overlay" onclick="closeModal()"><div class="modal" onclick="event.stopPropagation()">${inner}</div></div>`;
+}
+
+// =====================================================
+// ACTIONS
+// =====================================================
+function switchTab(t) { state.tab = t; render(); }
+
+// -- Combat --
+function startCombat() {
+  if (state.creatures.length === 0) return;
+  state.combatStarted = true;
+  state.round = 1;
+  state.activeIndex = 0;
+  saveEncounter(); render();
+}
+function endCombat() {
+  state.combatStarted = false;
+  state.round = 0;
+  state.activeIndex = -1;
+  // Reset death saves and conditions
+  state.creatures.forEach(c => { c.deathSaves = {successes:0,failures:0}; });
+  saveEncounter(); render();
+}
+function nextTurn() {
+  const sorted = getSorted();
+  if (sorted.length === 0) return;
+  if (state.activeIndex >= sorted.length - 1) {
+    state.activeIndex = 0;
+    state.round++;
+  } else {
+    state.activeIndex++;
+  }
+  saveEncounter(); render();
+}
+function prevTurn() {
+  const sorted = getSorted();
+  if (sorted.length === 0) return;
+  if (state.activeIndex <= 0) {
+    if (state.round > 1) {
+      state.activeIndex = sorted.length - 1;
+      state.round--;
+    }
+  } else {
+    state.activeIndex--;
+  }
+  saveEncounter(); render();
+}
+
+function openAddCreature() {
+  state.modal = { type:'addCreature', data:{ type:2, name:'', initiative:'', maxHp:'', ac:'', saveToRoster:false } };
+  render();
+  setTimeout(() => { const el = document.getElementById('m-name'); if(el) el.focus(); }, 50);
+}
+
+function openSaveToRosterFromAdd() {
+  if (state.modal && state.modal.type === 'addCreature') {
+    state.modal.data.saveToRoster = !state.modal.data.saveToRoster;
+    // Visual feedback via re-render not needed - just toggle the flag
+    // But let's show it
+    const btn = event.target;
+    if (state.modal.data.saveToRoster) {
+      btn.textContent = '✅ Will save to roster';
+      btn.style.color = 'var(--green)';
+    } else {
+      btn.textContent = '💾 Also save to roster';
+      btn.style.color = 'var(--accent-bright)';
+    }
+  }
+}
+
+function modalSetType(t) {
+  if (state.modal) { state.modal.data.type = t; render(); }
+  setTimeout(() => { const el = document.getElementById('m-name'); if(el) el.focus(); }, 50);
+}
+
+function modalSubmit() {
+  const m = state.modal;
+  if (!m) return;
+  const name = (document.getElementById('m-name')?.value || '').trim();
+  if (!name) return;
+  const init = parseInt(document.getElementById('m-init')?.value) || 0;
+  const hp = document.getElementById('m-hp')?.value;
+  const maxHp = hp === '' || hp === undefined ? null : (parseInt(hp) || 0);
+  const acVal = document.getElementById('m-ac')?.value;
+  const ac = acVal === '' || acVal === undefined ? null : (parseInt(acVal) || 0);
+  const type = m.data.type ?? 0;
+
+  if (m.type === 'addCreature') {
+    const creature = {
+      id: uid(), name, initiative: init, hp: maxHp, maxHp, tempHp: 0,
+      ac, type, conditions: [], deathSaves: { successes:0, failures:0 },
+    };
+    state.creatures.push(creature);
+    if (m.data.saveToRoster) {
+      state.roster.push({ id: uid(), name, type, maxHp, ac, defaultInit: init || null });
+      saveRoster();
+    }
+    saveEncounter();
+    // Keep modal open for batch adding - reset fields
+    m.data.name = ''; m.data.initiative = ''; m.data.maxHp = ''; m.data.ac = ''; m.data.saveToRoster = false;
+    render();
+    setTimeout(() => { const el = document.getElementById('m-name'); if(el) el.focus(); }, 50);
+  } else if (m.type === 'addRoster') {
+    state.roster.push({ id: uid(), name, type, maxHp, ac, defaultInit: init || null });
+    saveRoster();
+    closeModal();
+  } else if (m.type === 'editRoster') {
+    const r = state.roster.find(x => x.id === m.data.id);
+    if (r) { r.name = name; r.type = type; r.maxHp = maxHp; r.ac = ac; r.defaultInit = init || null; }
+    saveRoster();
+    closeModal();
+  }
+}
+
+function addFromRoster(rid) {
+  const r = state.roster.find(x => x.id === rid);
+  if (!r) return;
+  state.creatures.push({
+    id: uid(), name: r.name, initiative: r.defaultInit || 0,
+    hp: r.maxHp, maxHp: r.maxHp, tempHp: 0,
+    ac: r.ac ?? null,
+    type: r.type, conditions: [],
+    deathSaves: { successes:0, failures:0 },
+  });
+  saveEncounter(); render();
+}
+
+function confirmRemoveCreature(id) {
+  const c = state.creatures.find(x => x.id === id);
+  if (!c) return;
+  state.modal = { type:'confirm', data:{
+    title: 'Remove Creature',
+    message: `Remove <strong>${esc(c.name)}</strong> from combat?`,
+    confirmLabel: 'Remove',
+    action: () => removeCreature(id),
+  }};
+  render();
+}
+
+function removeCreature(id) {
+  const sorted = getSorted();
+  const idx = sorted.findIndex(c => c.id === id);
+  state.creatures = state.creatures.filter(c => c.id !== id);
+  if (idx < state.activeIndex) state.activeIndex--;
+  else if (idx === state.activeIndex && state.activeIndex >= getSorted().length) state.activeIndex = 0;
+  if (state.creatures.length === 0) { state.combatStarted = false; state.round = 0; state.activeIndex = -1; }
+  saveEncounter(); closeModal();
+}
+
+function confirmClearAll() {
+  state.modal = { type:'confirm', data:{
+    title: 'Clear Encounter',
+    message: 'Remove all creatures and end combat?',
+    confirmLabel: 'Clear All',
+    action: () => { state.creatures=[]; state.activeIndex=-1; state.round=0; state.combatStarted=false; saveEncounter(); closeModal(); },
+  }};
+  render();
+}
+
+function confirmRemoveRoster(rid) {
+  const r = state.roster.find(x => x.id === rid);
+  if (!r) return;
+  state.modal = { type:'confirm', data:{
+    title: 'Delete from Roster',
+    message: `Remove <strong>${esc(r.name)}</strong> from your roster? This won't affect creatures already in combat.`,
+    confirmLabel: 'Delete',
+    action: () => { state.roster = state.roster.filter(x => x.id !== rid); saveRoster(); closeModal(); },
+  }};
+  render();
+}
+
+function confirmAction() {
+  if (state.modal?.data?.action) state.modal.data.action();
+}
+
+function openEditRoster(rid) {
+  const r = state.roster.find(x => x.id === rid);
+  if (!r) return;
+  state.modal = { type:'editRoster', data:{ id:r.id, type:r.type, name:r.name, maxHp:r.maxHp, ac:r.ac, defaultInit:r.defaultInit } };
+  render();
+  setTimeout(() => { const el = document.getElementById('m-name'); if(el) el.focus(); }, 50);
+}
+
+function openAddRoster() {
+  state.modal = { type:'addRoster', data:{ type:0, name:'', defaultInit:'', maxHp:'', ac:'' } };
+  render();
+  setTimeout(() => { const el = document.getElementById('m-name'); if(el) el.focus(); }, 50);
+}
+
+// -- Conditions --
+function openConditions(id) {
+  state.modal = { type:'conditions', data:{ id } };
+  render();
+}
+function toggleCondition(id, cond) {
+  const c = state.creatures.find(x => x.id === id);
+  if (!c) return;
+  if (c.conditions.includes(cond)) c.conditions = c.conditions.filter(x => x !== cond);
+  else c.conditions.push(cond);
+  saveEncounter(); render();
+}
+
+// -- HP --
+function openHpEdit(id) {
+  state.modal = { type:'hpEdit', data:{ id, mode:'damage', amount:'' } };
+  render();
+  setTimeout(() => { const el = document.getElementById('m-hp-val'); if(el) el.focus(); }, 50);
+}
+function hpSetMode(mode) {
+  if (state.modal) { state.modal.data.mode = mode; render(); }
+  setTimeout(() => { const el = document.getElementById('m-hp-val'); if(el) el.focus(); }, 50);
+}
+function applyHp() {
+  const m = state.modal;
+  if (!m || m.type !== 'hpEdit') return;
+  const c = state.creatures.find(x => x.id === m.data.id);
+  if (!c) return;
+  const val = parseInt(document.getElementById('m-hp-val')?.value) || 0;
+  if (val === 0) return;
+  const mode = m.data.mode;
+
+  if (mode === 'damage') {
+    let remaining = val;
+    if (c.tempHp > 0) {
+      const absorbed = Math.min(c.tempHp, remaining);
+      c.tempHp -= absorbed;
+      remaining -= absorbed;
+    }
+    c.hp = Math.max(0, c.hp - remaining);
+  } else if (mode === 'heal') {
+    c.hp = Math.min(c.maxHp, c.hp + val);
+    // Reset death saves on heal
+    if (c.hp > 0) c.deathSaves = { successes:0, failures:0 };
+  } else {
+    c.tempHp = Math.max(c.tempHp, val);
+  }
+  saveEncounter(); closeModal();
+}
+
+// -- Initiative Edit --
+function openInitEdit(id) {
+  state.modal = { type:'initEdit', data:{ id } };
+  render();
+  setTimeout(() => { const el = document.getElementById('m-init-val'); if(el) { el.focus(); el.select(); } }, 50);
+}
+function applyInit() {
+  const m = state.modal;
+  if (!m || m.type !== 'initEdit') return;
+  const c = state.creatures.find(x => x.id === m.data.id);
+  if (!c) return;
+  c.initiative = parseInt(document.getElementById('m-init-val')?.value) || 0;
+  saveEncounter(); closeModal();
+}
+
+// -- Death Saves --
+function toggleDS(id, type, idx) {
+  const c = state.creatures.find(x => x.id === id);
+  if (!c) return;
+  const key = type === 's' ? 'successes' : 'failures';
+  if (idx < c.deathSaves[key]) c.deathSaves[key] = idx;
+  else c.deathSaves[key] = Math.min(3, idx + 1);
+  saveEncounter(); render();
+}
+
+function closeModal() { state.modal = null; render(); }
+
+// =====================================================
+// INIT
+// =====================================================
+loadRoster();
+loadEncounter();
+render();
+</script>
+</body>
+</html>
