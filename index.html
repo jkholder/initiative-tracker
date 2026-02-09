@@ -15,756 +15,1098 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0b0b18;
-  --bg-raised: #12122a;
-  --bg-surface: rgba(255,255,255,0.03);
-  --bg-surface-hover: rgba(255,255,255,0.055);
-  --border: rgba(255,255,255,0.05);
-  --border-focus: rgba(130,120,255,0.45);
-  --text-1: #e8e4f0;
-  --text-2: #9892a6;
-  --text-3: #5e586e;
-  --accent: #7c6aef;
-  --accent-bright: #a594ff;
-  --accent-glow: rgba(124,106,239,0.25);
-  --accent-grad: linear-gradient(135deg,#7c6aef,#a855f7);
-  --green: #34d399;
-  --green-dim: rgba(52,211,153,0.14);
-  --yellow: #fbbf24;
-  --red: #f87171;
-  --red-dim: rgba(248,113,113,0.14);
-  --blue: #60a5fa;
-  --blue-dim: rgba(96,165,250,0.14);
-  --font-d: 'Cinzel',serif;
-  --font-b: 'Outfit',sans-serif;
-  --safe-b: env(safe-area-inset-bottom,0px);
-  --safe-t: env(safe-area-inset-top,0px);
+:root{
+  --bg:#0b0b18;--bg2:#12122a;--bg3:rgba(255,255,255,0.03);--bg3h:rgba(255,255,255,0.055);
+  --brd:rgba(255,255,255,0.05);--brdf:rgba(130,120,255,0.45);
+  --t1:#e8e4f0;--t2:#9892a6;--t3:#5e586e;--t4:#3d3852;
+  --acc:#7c6aef;--accb:#a594ff;--accg:rgba(124,106,239,0.25);--accgr:linear-gradient(135deg,#7c6aef,#a855f7);
+  --grn:#34d399;--grnd:rgba(52,211,153,0.14);
+  --ylw:#fbbf24;--ylwd:rgba(251,191,36,0.12);
+  --red:#f87171;--redd:rgba(248,113,113,0.14);
+  --blu:#60a5fa;--blud:rgba(96,165,250,0.14);
+  --fd:'Cinzel',serif;--fb:'Outfit',sans-serif;
+  --sb:env(safe-area-inset-bottom,0px);--st:env(safe-area-inset-top,0px);
+  /* Type backgrounds */
+  --pc-bg:rgba(96,165,250,0.06);--pc-brd:rgba(96,165,250,0.15);
+  --ally-bg:rgba(52,211,153,0.06);--ally-brd:rgba(52,211,153,0.15);
+  --enemy-bg:rgba(248,113,113,0.06);--enemy-brd:rgba(248,113,113,0.15);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{background:var(--bg);color:var(--text-1);font-family:var(--font-b);min-height:100vh;min-height:100dvh;overscroll-behavior:none;-webkit-font-smoothing:antialiased}
-body{padding-bottom:calc(120px + var(--safe-b))}
-body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:128px 128px}
+html,body{background:var(--bg);color:var(--t1);font-family:var(--fb);min-height:100vh;min-height:100dvh;overscroll-behavior:none;-webkit-font-smoothing:antialiased}
+body{padding-bottom:calc(120px + var(--sb))}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:128px}
 #app{position:relative;z-index:1;max-width:700px;margin:0 auto}
-button{font-family:var(--font-b);cursor:pointer;border:none;background:none;color:inherit}
-input{font-family:var(--font-b);color:var(--text-1);background:var(--bg-surface);border:2px solid var(--border);border-radius:10px;padding:12px 14px;font-size:16px;outline:none;width:100%;transition:border-color .15s}
-input:focus{border-color:var(--border-focus)}
-input::placeholder{color:var(--text-3)}
+button{font-family:var(--fb);cursor:pointer;border:none;background:none;color:inherit}
+input,select{font-family:var(--fb);color:var(--t1);background:var(--bg3);border:2px solid var(--brd);border-radius:10px;padding:12px 14px;font-size:16px;outline:none;width:100%;transition:border-color .15s}
+input:focus{border-color:var(--brdf)}
+input::placeholder{color:var(--t3)}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--brd);border-radius:4px}
 
-/* Scrollbar */
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+/* HEADER */
+.hdr{background:linear-gradient(180deg,rgba(124,106,239,.06) 0%,transparent 100%);border-bottom:1px solid var(--brd);padding:20px 20px 14px;padding-top:calc(18px + var(--st));display:flex;justify-content:space-between;align-items:center}
+.hdr h1{font-family:var(--fd);font-size:21px;font-weight:900;letter-spacing:1px}
+.hdr .sub{color:var(--t3);font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;margin-top:2px}
+.rnd-box{text-align:right}
+.rnd-box .num{color:var(--accb);font-size:28px;font-weight:900;line-height:1;font-family:var(--fd)}
+.rnd-box .lbl{color:var(--t3);font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase}
 
-/* ---- HEADER ---- */
-.header{background:linear-gradient(180deg,rgba(124,106,239,0.06) 0%,transparent 100%);border-bottom:1px solid var(--border);padding:20px 20px 16px;padding-top:calc(20px + var(--safe-t));display:flex;justify-content:space-between;align-items:center}
-.header h1{font-family:var(--font-d);font-size:22px;font-weight:900;letter-spacing:1px}
-.header .sub{color:var(--text-3);font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;margin-top:3px}
-.round-box{text-align:right}
-.round-box .num{color:var(--accent-bright);font-size:30px;font-weight:900;line-height:1;font-family:var(--font-d)}
-.round-box .lbl{color:var(--text-3);font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase}
+/* TABS */
+.tabs{display:flex;gap:3px;padding:10px 16px 4px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;padding:9px 14px;border-radius:10px;font-size:13px;font-weight:600;color:var(--t3);background:var(--bg3);border:2px solid transparent;transition:all .15s;white-space:nowrap}
+.tab.on{color:var(--accb);border-color:var(--brdf);background:rgba(124,106,239,.08)}
+.tab:active{transform:scale(.97)}
 
-/* ---- TABS ---- */
-.tab-bar{display:flex;gap:4px;padding:12px 16px 4px}
-.tab-btn{flex:1;padding:10px;border-radius:10px;font-size:14px;font-weight:600;color:var(--text-3);background:var(--bg-surface);border:2px solid transparent;transition:all .15s}
-.tab-btn.active{color:var(--accent-bright);border-color:var(--border-focus);background:rgba(124,106,239,0.08)}
-.tab-btn:active{transform:scale(0.97)}
+/* ACTIVE BANNER */
+.abanner{margin:10px 16px 6px;padding:14px 18px;background:linear-gradient(135deg,rgba(124,106,239,.16),rgba(168,85,247,.1));border:1px solid var(--brdf);border-radius:14px;display:flex;align-items:center;justify-content:space-between;animation:sld .25s ease-out}
+@keyframes sld{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.abanner .lbl{color:var(--accb);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:2px}
+.abanner .nm{color:var(--t1);font-size:18px;font-weight:800;font-family:var(--fd)}
+.tbtns{display:flex;gap:6px}
+.tbtn{width:44px;height:44px;border-radius:12px;border:2px solid rgba(255,255,255,.07);background:rgba(255,255,255,.04);color:var(--t2);font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .12s}
+.tbtn:active{transform:scale(.92)}
+.tbtn.go{border:none;background:var(--accgr);color:#fff;box-shadow:0 4px 16px var(--accg)}
 
-/* ---- ACTIVE BANNER ---- */
-.active-banner{margin:12px 16px 8px;padding:16px 20px;background:linear-gradient(135deg,rgba(124,106,239,0.16),rgba(168,85,247,0.1));border:1px solid var(--border-focus);border-radius:14px;display:flex;align-items:center;justify-content:space-between;animation:slideDown .25s ease-out}
-@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-.active-banner .lbl{color:var(--accent-bright);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px}
-.active-banner .nm{color:var(--text-1);font-size:20px;font-weight:800;font-family:var(--font-d)}
-.turn-btns{display:flex;gap:8px}
-.turn-btn{width:46px;height:46px;border-radius:13px;border:2px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.04);color:var(--text-2);font-size:17px;display:flex;align-items:center;justify-content:center;transition:all .12s}
-.turn-btn:active{transform:scale(0.92)}
-.turn-btn.go{border:none;background:var(--accent-grad);color:#fff;box-shadow:0 4px 18px var(--accent-glow)}
+/* CREATURE ROW */
+.clist{padding:6px 16px}
+.cr{position:relative;border:2px solid var(--brd);border-radius:13px;padding:12px 12px 12px 8px;margin-bottom:7px;transition:all .2s;animation:ri .2s ease-out}
+@keyframes ri{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+.cr.t0{background:var(--pc-bg);border-color:var(--pc-brd)}.cr.t1{background:var(--ally-bg);border-color:var(--ally-brd)}.cr.t2{background:var(--enemy-bg);border-color:var(--enemy-brd)}
+.cr.act{border-color:var(--brdf);box-shadow:0 0 20px rgba(124,106,239,.1)}
+.cr.dead{opacity:.4}
+.cr .abar{position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:55%;background:var(--accgr);border-radius:0 4px 4px 0}
+.cr .inn{display:flex;align-items:center;gap:8px}
+.drag-h{display:flex;align-items:center;justify-content:center;width:24px;color:var(--t4);font-size:18px;cursor:grab;flex-shrink:0;touch-action:none;user-select:none;-webkit-user-select:none}
+.drag-h:active{cursor:grabbing;color:var(--t2)}
+.ibadge{min-width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05);color:var(--t2);font-size:16px;font-weight:800;flex-shrink:0;transition:all .15s}
+.cr.act .ibadge{background:var(--accgr);color:#fff}
+.ibadge:active{transform:scale(.92)}
+.cinfo{flex:1;min-width:0}
+.cnr{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cname{font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ctype{font-size:9px;font-weight:700;padding:2px 6px;border-radius:5px;flex-shrink:0;letter-spacing:.5px}
+.cconds{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px}
+.ccond{font-size:10px;font-weight:600;padding:2px 5px;border-radius:5px}
+.ceffs{display:flex;gap:3px;flex-wrap:wrap;margin-top:3px}
+.ceff{font-size:10px;font-weight:600;padding:2px 6px;border-radius:5px;background:rgba(251,191,36,.1);color:var(--ylw);display:flex;align-items:center;gap:3px}
+.ceff .x{cursor:pointer;font-size:12px;opacity:.7}
+.ceff .x:hover{opacity:1}
 
-/* ---- CREATURE ROW ---- */
-.creature-list{padding:8px 16px}
-.c-row{position:relative;background:var(--bg-surface);border:2px solid var(--border);border-radius:14px;padding:13px 14px;margin-bottom:8px;transition:all .2s;animation:rowIn .2s ease-out}
-@keyframes rowIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
-.c-row.active{background:linear-gradient(135deg,rgba(124,106,239,0.12),rgba(168,85,247,0.07));border-color:var(--border-focus)}
-.c-row.dead{opacity:0.4}
-.c-row .bar{position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:55%;background:var(--accent-grad);border-radius:0 4px 4px 0}
-.c-row .inner{display:flex;align-items:center;gap:10px}
-.init-badge{min-width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);color:var(--text-2);font-size:17px;font-weight:800;transition:all .15s;flex-shrink:0}
-.c-row.active .init-badge{background:var(--accent-grad);color:#fff}
-.init-badge:active{transform:scale(0.92)}
-.c-info{flex:1;min-width:0}
-.c-name-row{display:flex;align-items:center;gap:7px}
-.c-name{font-size:15px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.c-type{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;flex-shrink:0;letter-spacing:0.5px}
-.c-conditions{display:flex;gap:3px;flex-wrap:wrap;margin-top:5px}
-.c-cond{font-size:10px;font-weight:600;padding:2px 6px;border-radius:5px}
-.c-ac{display:flex;flex-direction:column;align-items:center;min-width:36px;flex-shrink:0}
-.ac-shield{width:34px;height:38px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--yellow);position:relative}
-.ac-shield::before{content:'';position:absolute;inset:0;background:rgba(251,191,36,0.08);border:1.5px solid rgba(251,191,36,0.25);border-radius:4px 4px 10px 10px;clip-path:polygon(50% 0%,100% 0%,100% 65%,50% 100%,0% 65%,0% 0%)}
-.ac-label{font-size:9px;font-weight:700;color:var(--text-3);letter-spacing:1px;text-transform:uppercase;margin-top:1px}
-.c-hp-btn{padding:3px;display:flex;flex-direction:column;align-items:center;min-width:56px;flex-shrink:0}
-.hp-bar{width:48px;height:7px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden}
-.hp-fill{height:100%;border-radius:4px;transition:width .3s ease}
-.hp-text{font-size:12px;font-weight:700;margin-top:2px}
-.c-actions{display:flex;gap:3px;flex-shrink:0}
-.c-act{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,0.03);color:var(--text-3);font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .12s}
-.c-act:active{transform:scale(0.9)}
-.c-act.has{background:rgba(124,106,239,0.12);color:var(--accent-bright)}
+/* Legendary Actions */
+.cleg{display:flex;align-items:center;gap:4px;margin-top:4px}
+.cleg-lbl{font-size:10px;color:var(--ylw);font-weight:600;margin-right:2px}
+.leg-dot{width:16px;height:16px;border-radius:50%;border:2px solid rgba(251,191,36,.35);background:transparent;transition:all .12s;cursor:pointer}
+.leg-dot:active{transform:scale(.85)}
+.leg-dot.filled{background:var(--ylw);border-color:var(--ylw)}
+
+/* AC Shield */
+.cac{display:flex;flex-direction:column;align-items:center;min-width:34px;flex-shrink:0}
+.ac-sh{width:32px;height:36px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--ylw);position:relative}
+.ac-sh::before{content:'';position:absolute;inset:0;background:var(--ylwd);border:1.5px solid rgba(251,191,36,.25);border-radius:4px 4px 10px 10px;clip-path:polygon(50% 0%,100% 0%,100% 65%,50% 100%,0% 65%,0% 0%)}
+.ac-lbl{font-size:8px;font-weight:700;color:var(--t4);letter-spacing:1px;text-transform:uppercase;margin-top:1px}
+
+/* HP */
+.chp{padding:2px;display:flex;flex-direction:column;align-items:center;min-width:52px;flex-shrink:0;cursor:pointer}
+.hbar{width:46px;height:6px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden}
+.hfill{height:100%;border-radius:3px;transition:width .3s}
+.htxt{font-size:11px;font-weight:700;margin-top:2px}
+
+/* Actions */
+.cacts{display:flex;gap:3px;flex-shrink:0}
+.ca{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.03);color:var(--t4);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .12s}
+.ca:active{transform:scale(.9)}
+.ca.has{background:rgba(124,106,239,.12);color:var(--accb)}
 
 /* Death Saves */
-.death-saves{display:flex;gap:10px;align-items:center;margin-top:5px}
-.ds-group{display:flex;align-items:center;gap:3px}
-.ds-label{font-size:11px;margin-right:1px}
-.ds-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--text-3);background:transparent;transition:all .12s}
-.ds-dot:active{transform:scale(0.85)}
-.ds-dot.suc{border-color:var(--green)}
-.ds-dot.suc.filled{background:var(--green)}
-.ds-dot.fail{border-color:var(--red)}
-.ds-dot.fail.filled{background:var(--red)}
+.ds{display:flex;gap:8px;align-items:center;margin-top:4px}
+.dsg{display:flex;align-items:center;gap:3px}
+.dsl{font-size:10px;margin-right:1px}
+.dsd{width:15px;height:15px;border-radius:50%;border:2px solid var(--t4);background:transparent;transition:all .12s;cursor:pointer}
+.dsd:active{transform:scale(.85)}
+.dsd.s{border-color:var(--grn)}.dsd.s.f{background:var(--grn)}
+.dsd.fl{border-color:var(--red)}.dsd.fl.f{background:var(--red)}
 
-/* ---- EMPTY STATE ---- */
-.empty{text-align:center;padding:50px 20px;color:var(--text-3)}
-.empty .icon{font-size:44px;margin-bottom:14px;opacity:0.45}
-.empty .t{font-size:15px;font-weight:600;color:var(--text-2);margin-bottom:4px}
+/* Lair Action Row */
+.lair-row{background:rgba(168,85,247,.08);border:2px solid rgba(168,85,247,.2);border-radius:13px;padding:12px 16px;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between}
+.lair-row.act{border-color:var(--brdf);box-shadow:0 0 20px rgba(124,106,239,.1)}
+.lair-row .abar{position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:55%;background:var(--accgr);border-radius:0 4px 4px 0}
+.lair-info{display:flex;align-items:center;gap:10px}
+.lair-icon{font-size:20px}
+.lair-name{font-size:14px;font-weight:700;color:var(--accb)}
+.lair-init{font-size:11px;color:var(--t3);font-weight:600}
+.lair-check{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;transition:all .12s}
+.lair-check.used{background:rgba(52,211,153,.12);color:var(--grn)}
+.lair-check.unused{background:rgba(255,255,255,.04);color:var(--t4)}
 
-/* ---- ROSTER ---- */
-.roster-list{padding:8px 16px}
-.r-row{display:flex;align-items:center;gap:12px;background:var(--bg-surface);border:2px solid var(--border);border-radius:14px;padding:13px 14px;margin-bottom:8px;animation:rowIn .2s ease-out}
-.r-row .r-info{flex:1;min-width:0}
-.r-row .r-name{font-size:15px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.r-row .r-detail{font-size:12px;color:var(--text-3);margin-top:2px}
-.r-actions{display:flex;gap:4px}
-.r-act{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.04);color:var(--text-3);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .12s}
-.r-act:active{transform:scale(0.9)}
-.r-act.add{background:var(--green-dim);color:var(--green)}
+/* EMPTY */
+.empty{text-align:center;padding:40px 20px;color:var(--t3)}
+.empty .ei{font-size:40px;margin-bottom:12px;opacity:.45}
+.empty .et{font-size:14px;font-weight:600;color:var(--t2);margin-bottom:4px}
 
-/* ---- BOTTOM BAR ---- */
-.bottom-bar{position:fixed;bottom:0;left:0;right:0;z-index:50;background:linear-gradient(180deg,transparent,var(--bg) 18%);padding:16px 16px;padding-bottom:calc(20px + var(--safe-b))}
-.bottom-inner{display:flex;gap:8px;max-width:700px;margin:0 auto}
-.btn-main{flex:1;padding:15px;border-radius:13px;font-size:15px;font-weight:700;text-align:center;transition:all .12s}
-.btn-main:active{transform:scale(0.97)}
-.btn-main.accent{background:var(--accent-grad);color:#fff;box-shadow:0 4px 22px var(--accent-glow)}
-.btn-main.green{border:2px solid rgba(52,211,153,0.35);background:var(--green-dim);color:var(--green)}
-.btn-main.red{border:2px solid rgba(248,113,113,0.35);background:var(--red-dim);color:var(--red)}
-.btn-main.ghost{border:2px solid var(--border);background:transparent;color:var(--text-3)}
-.btn-main:disabled{opacity:0.35;cursor:default;transform:none}
+/* ROSTER / ENCOUNTER ROWS */
+.rlist{padding:6px 16px}
+.rr{display:flex;align-items:center;gap:10px;background:var(--bg3);border:2px solid var(--brd);border-radius:13px;padding:12px 14px;margin-bottom:7px;animation:ri .2s ease-out}
+.rr .ri{flex:1;min-width:0}
+.rr .rn{font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rr .rd{font-size:11px;color:var(--t3);margin-top:2px}
+.racts{display:flex;gap:3px}
+.ra{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.04);color:var(--t3);font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .12s}
+.ra:active{transform:scale(.9)}
+.ra.add{background:var(--grnd);color:var(--grn)}
 
-/* ---- MODAL ---- */
-.modal-overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.72);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .15s}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.modal{background:var(--bg-raised);border:1px solid var(--border);border-radius:18px;padding:26px;width:100%;max-width:440px;max-height:82vh;overflow-y:auto;animation:modalIn .2s ease-out}
-@keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.modal h3{font-family:var(--font-d);font-size:19px;font-weight:800;margin-bottom:18px;color:var(--text-1)}
-.modal-sub{color:var(--text-3);font-size:13px;margin:-12px 0 18px}
-.modal-close{position:absolute;top:18px;right:18px;font-size:22px;color:var(--text-3);background:none;border:none;cursor:pointer;padding:4px}
+/* LOG */
+.log-list{padding:6px 16px}
+.log-e{padding:8px 12px;border-left:3px solid var(--brd);margin-bottom:4px;font-size:12px;color:var(--t2);line-height:1.5}
+.log-e .lr{color:var(--accb);font-weight:700;margin-right:6px;font-size:11px}
+.log-e .lt{color:var(--t3);font-size:10px;float:right}
 
-/* Type Selector */
-.type-row{display:flex;gap:6px;margin-bottom:14px}
-.type-btn{flex:1;padding:10px;border-radius:10px;font-size:13px;font-weight:700;border:2px solid var(--border);background:var(--bg-surface);color:var(--text-3);transition:all .12s}
-.type-btn:active{transform:scale(0.96)}
-.type-btn.sel{color:var(--text-1)}
+/* BOTTOM BAR */
+.bbar{position:fixed;bottom:0;left:0;right:0;z-index:50;background:linear-gradient(180deg,transparent,var(--bg) 18%);padding:14px 16px;padding-bottom:calc(18px + var(--sb))}
+.binn{display:flex;gap:7px;max-width:700px;margin:0 auto}
+.bm{flex:1;padding:14px;border-radius:12px;font-size:14px;font-weight:700;text-align:center;transition:all .12s}
+.bm:active{transform:scale(.97)}
+.bm.acc{background:var(--accgr);color:#fff;box-shadow:0 4px 20px var(--accg)}
+.bm.grn{border:2px solid rgba(52,211,153,.35);background:var(--grnd);color:var(--grn)}
+.bm.rd{border:2px solid rgba(248,113,113,.35);background:var(--redd);color:var(--red)}
+.bm.gh{border:2px solid var(--brd);color:var(--t3)}
+.bm:disabled{opacity:.35;cursor:default;transform:none}
 
-/* Form */
-.field-row{display:flex;gap:10px;margin-bottom:14px}
-.field-row input{flex:1}
-.modal-btns{display:flex;gap:10px;margin-top:18px}
-.modal-btns button{flex:1;padding:14px;border-radius:12px;font-size:15px;font-weight:700}
-.mbtn-cancel{border:2px solid var(--border);color:var(--text-2)}
-.mbtn-primary{background:var(--accent-grad);color:#fff}
-.mbtn-green{background:var(--green);color:#0b0b18}
+/* MODAL */
+.mov{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.72);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;padding:16px;animation:fi .15s}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.mo{background:var(--bg2);border:1px solid var(--brd);border-radius:16px;padding:24px;width:100%;max-width:440px;max-height:82vh;overflow-y:auto;animation:mi .2s ease-out}
+@keyframes mi{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.mo h3{font-family:var(--fd);font-size:18px;font-weight:800;margin-bottom:16px;color:var(--t1)}
+.mo-sub{color:var(--t3);font-size:12px;margin:-10px 0 16px}
+.typr{display:flex;gap:5px;margin-bottom:12px}
+.tyb{flex:1;padding:9px;border-radius:9px;font-size:12px;font-weight:700;border:2px solid var(--brd);background:var(--bg3);color:var(--t3);transition:all .12s}
+.tyb:active{transform:scale(.96)}
+.tyb.sel{color:var(--t1)}
+.fr{display:flex;gap:8px;margin-bottom:12px}
+.fr input{flex:1}
+.mbts{display:flex;gap:8px;margin-top:16px}
+.mbts button{flex:1;padding:13px;border-radius:11px;font-size:14px;font-weight:700}
+.mbc{border:2px solid var(--brd);color:var(--t2)}
+.mbp{background:var(--accgr);color:#fff}
+.mbg{background:var(--grn);color:#0b0b18}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.cbtn{display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:8px;border:2px solid var(--brd);background:var(--bg3);color:var(--t3);font-size:12px;font-weight:600;transition:all .12s}
+.cbtn:active{transform:scale(.96)}
+.cbtn.on{color:var(--t1)}
+.hpm{display:flex;gap:6px;margin-bottom:12px}
+.hpmb{flex:1;padding:9px;border-radius:9px;font-size:12px;font-weight:700;border:2px solid var(--brd);background:var(--bg3);color:var(--t3);transition:all .12s}
+.hpmb.sel{color:var(--t1)}
+.hpi{text-align:center;font-size:26px;font-weight:800;margin-bottom:12px}
+.ctx{color:var(--t2);font-size:13px;line-height:1.6;margin-bottom:16px}
+.chk-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13px;color:var(--t2);cursor:pointer}
+.chk-row .chk{width:22px;height:22px;border-radius:6px;border:2px solid var(--brd);display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .12s}
+.chk-row .chk.on{background:var(--acc);border-color:var(--acc);color:#fff}
 
-/* Condition Grid */
-.cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.cond-btn{display:flex;align-items:center;gap:7px;padding:9px 11px;border-radius:9px;border:2px solid var(--border);background:var(--bg-surface);color:var(--text-3);font-size:13px;font-weight:600;transition:all .12s}
-.cond-btn:active{transform:scale(0.96)}
-.cond-btn.on{color:var(--text-1)}
-.cond-icon{font-size:15px}
+/* TOAST */
+.toast{position:fixed;top:calc(80px + var(--st));left:50%;transform:translateX(-50%);background:var(--bg2);border:1px solid var(--ylw);border-radius:12px;padding:14px 20px;z-index:200;animation:toastIn .3s ease-out;box-shadow:0 8px 30px rgba(0,0,0,.5);max-width:360px;text-align:center}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(-16px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.toast .tt{color:var(--ylw);font-weight:700;font-size:14px;margin-bottom:4px}
+.toast .tb{color:var(--t2);font-size:13px}
 
-/* HP Editor Modes */
-.hp-modes{display:flex;gap:7px;margin-bottom:14px}
-.hp-mode{flex:1;padding:10px;border-radius:10px;font-size:13px;font-weight:700;border:2px solid var(--border);background:var(--bg-surface);color:var(--text-3);transition:all .12s}
-.hp-mode.sel{color:var(--text-1)}
-.hp-input{text-align:center;font-size:28px;font-weight:800;margin-bottom:14px}
+/* Dragging */
+.cr.dragging{opacity:.3}
+.drag-ghost{position:fixed;z-index:150;pointer-events:none;opacity:.92;box-shadow:0 8px 32px rgba(0,0,0,.5);transform:scale(1.02);border-radius:13px}
 
-/* Confirm dialog */
-.confirm-text{color:var(--text-2);font-size:14px;line-height:1.6;margin-bottom:18px}
+/* LANDSCAPE */
+@media(min-width:900px){
+  #app{max-width:1100px}
+  .layout-wrap{display:flex;gap:12px;padding:0 16px}
+  .layout-main{flex:1;min-width:0}
+  .layout-side{width:320px;flex-shrink:0;position:sticky;top:10px;max-height:calc(100vh - 160px);overflow-y:auto;background:var(--bg3);border:1px solid var(--brd);border-radius:14px;padding:14px}
+  .layout-side h4{font-family:var(--fd);font-size:14px;margin-bottom:10px;color:var(--t2)}
+  .layout-main .clist{padding:6px 0}
+  .side-log .log-e{padding:6px 8px;font-size:11px}
+}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <script>
-// =====================================================
-// DATA & STATE
-// =====================================================
-const TYPES = [
-  { label:'PC', color:'#60a5fa', bg:'rgba(96,165,250,0.13)' },
-  { label:'Ally', color:'#34d399', bg:'rgba(52,211,153,0.13)' },
-  { label:'Enemy', color:'#f87171', bg:'rgba(248,113,113,0.13)' },
+// =============================================================
+// CONSTANTS
+// =============================================================
+const TYPES=[
+  {l:'PC',c:'#60a5fa',bg:'rgba(96,165,250,.13)',cls:'t0'},
+  {l:'Ally',c:'#34d399',bg:'rgba(52,211,153,.13)',cls:'t1'},
+  {l:'Enemy',c:'#f87171',bg:'rgba(248,113,113,.13)',cls:'t2'},
+];
+const CONDS=[
+  {n:'Blinded',i:'👁',c:'#6b7280'},{n:'Charmed',i:'💜',c:'#c084fc'},{n:'Deafened',i:'🔇',c:'#6b7280'},
+  {n:'Exhaustion',i:'💤',c:'#fbbf24'},{n:'Frightened',i:'😨',c:'#a78bfa'},{n:'Grappled',i:'🤜',c:'#f97316'},
+  {n:'Incapacitated',i:'⛔',c:'#ef4444'},{n:'Invisible',i:'👻',c:'#94a3b8'},{n:'Paralyzed',i:'⚡',c:'#fbbf24'},
+  {n:'Petrified',i:'🪨',c:'#78716c'},{n:'Poisoned',i:'☠️',c:'#22c55e'},{n:'Prone',i:'⬇',c:'#f97316'},
+  {n:'Restrained',i:'⛓',c:'#f97316'},{n:'Stunned',i:'💫',c:'#fbbf24'},{n:'Unconscious',i:'💀',c:'#ef4444'},
+  {n:'Concentrating',i:'🔮',c:'#818cf8'},
 ];
 
-const CONDITIONS = [
-  { name:'Blinded', icon:'👁', color:'#6b7280' },
-  { name:'Charmed', icon:'💜', color:'#c084fc' },
-  { name:'Deafened', icon:'🔇', color:'#6b7280' },
-  { name:'Exhaustion', icon:'💤', color:'#fbbf24' },
-  { name:'Frightened', icon:'😨', color:'#a78bfa' },
-  { name:'Grappled', icon:'🤜', color:'#f97316' },
-  { name:'Incapacitated', icon:'⛔', color:'#ef4444' },
-  { name:'Invisible', icon:'👻', color:'#94a3b8' },
-  { name:'Paralyzed', icon:'⚡', color:'#fbbf24' },
-  { name:'Petrified', icon:'🪨', color:'#78716c' },
-  { name:'Poisoned', icon:'☠️', color:'#22c55e' },
-  { name:'Prone', icon:'⬇', color:'#f97316' },
-  { name:'Restrained', icon:'⛓', color:'#f97316' },
-  { name:'Stunned', icon:'💫', color:'#fbbf24' },
-  { name:'Unconscious', icon:'💀', color:'#ef4444' },
-  { name:'Concentrating', icon:'🔮', color:'#818cf8' },
-];
-
-let state = {
-  creatures: [],
-  activeIndex: -1,
-  round: 0,
-  combatStarted: false,
-  tab: 'combat', // 'combat' | 'roster'
-  roster: [],
-  modal: null, // null | { type, data }
+// =============================================================
+// STATE
+// =============================================================
+let S={
+  creatures:[],activeIdx:-1,round:0,combat:false,
+  tab:'combat',roster:[],encounters:[],log:[],
+  lairEnabled:false,lairUsed:false,
+  modal:null,toast:null,
 };
+const uid=()=>Math.random().toString(36).slice(2,10);
+const esc=(s)=>{const d=document.createElement('div');d.textContent=s;return d.innerHTML;};
 
-function uid() { return Math.random().toString(36).slice(2,10); }
-function saveRoster() { try { localStorage.setItem('dnd_roster', JSON.stringify(state.roster)); } catch(e){} }
-function loadRoster() { try { const d = localStorage.getItem('dnd_roster'); if(d) state.roster = JSON.parse(d); } catch(e){} }
-function saveEncounter() { try { localStorage.setItem('dnd_encounter', JSON.stringify({ creatures:state.creatures, activeIndex:state.activeIndex, round:state.round, combatStarted:state.combatStarted })); } catch(e){} }
-function loadEncounter() { try { const d = localStorage.getItem('dnd_encounter'); if(d){ const p=JSON.parse(d); state.creatures=p.creatures||[]; state.activeIndex=p.activeIndex??-1; state.round=p.round||0; state.combatStarted=p.combatStarted||false; } } catch(e){} }
+// Storage
+function saveR(){try{localStorage.setItem('r2',JSON.stringify(S.roster))}catch(e){}}
+function loadR(){try{const d=localStorage.getItem('r2');if(d)S.roster=JSON.parse(d)}catch(e){}}
+function saveE(){try{localStorage.setItem('enc2',JSON.stringify(S.encounters))}catch(e){}}
+function loadE(){try{const d=localStorage.getItem('enc2');if(d)S.encounters=JSON.parse(d)}catch(e){}}
+function saveC(){try{localStorage.setItem('c2',JSON.stringify({cr:S.creatures,ai:S.activeIdx,rn:S.round,cb:S.combat,la:S.lairEnabled,lu:S.lairUsed}))}catch(e){}}
+function loadC(){try{const d=localStorage.getItem('c2');if(d){const p=JSON.parse(d);S.creatures=p.cr||[];S.activeIdx=p.ai??-1;S.round=p.rn||0;S.combat=p.cb||false;S.lairEnabled=p.la||false;S.lairUsed=p.lu||false}}catch(e){}}
+function saveLog(){try{localStorage.setItem('log2',JSON.stringify(S.log.slice(-200)))}catch(e){}}
+function loadLog(){try{const d=localStorage.getItem('log2');if(d)S.log=JSON.parse(d)}catch(e){}}
 
-function getSorted() { return [...state.creatures].sort((a,b) => b.initiative - a.initiative || a.name.localeCompare(b.name)); }
-
-// =====================================================
-// RENDER ENGINE
-// =====================================================
-function render() {
-  const app = document.getElementById('app');
-  const sorted = getSorted();
-  const activeCreature = state.combatStarted && sorted[state.activeIndex] ? sorted[state.activeIndex] : null;
-
-  let html = '';
-
-  // Header
-  html += `<div class="header"><div><h1>⚔️ Initiative</h1><div class="sub">D&D 2024 Tracker</div></div>`;
-  if (state.combatStarted) {
-    html += `<div class="round-box"><div class="num">${state.round}</div><div class="lbl">Round</div></div>`;
-  }
-  html += `</div>`;
-
-  // Tabs
-  html += `<div class="tab-bar">
-    <button class="tab-btn${state.tab==='combat'?' active':''}" onclick="switchTab('combat')">⚔️ Combat</button>
-    <button class="tab-btn${state.tab==='roster'?' active':''}" onclick="switchTab('roster')">📋 Roster</button>
-  </div>`;
-
-  if (state.tab === 'combat') {
-    // Active Banner
-    if (activeCreature) {
-      html += `<div class="active-banner">
-        <div><div class="lbl">Current Turn</div><div class="nm">${esc(activeCreature.name)}</div></div>
-        <div class="turn-btns">
-          <button class="turn-btn" onclick="prevTurn()">◀</button>
-          <button class="turn-btn go" onclick="nextTurn()">▶</button>
-        </div>
-      </div>`;
-    }
-
-    // Creature List
-    html += `<div class="creature-list">`;
-    if (sorted.length === 0) {
-      html += `<div class="empty"><div class="icon">⚔️</div><div class="t">No combatants yet</div><div>Add creatures or pull from your roster</div></div>`;
-    } else {
-      sorted.forEach((c, i) => {
-        const t = TYPES[c.type];
-        const isActive = state.combatStarted && i === state.activeIndex;
-        const isDead = c.maxHp !== null && c.hp === 0;
-        const hpPct = c.maxHp ? Math.max(0, Math.min(100, (c.hp / c.maxHp) * 100)) : null;
-        const hpCol = hpPct > 60 ? 'var(--green)' : hpPct > 30 ? 'var(--yellow)' : 'var(--red)';
-
-        html += `<div class="c-row${isActive?' active':''}${isDead?' dead':''}">`;
-        if (isActive) html += `<div class="bar"></div>`;
-        html += `<div class="inner">`;
-
-        // Init badge
-        html += `<button class="init-badge" onclick="openInitEdit('${c.id}')">${c.initiative}</button>`;
-
-        // Info
-        html += `<div class="c-info"><div class="c-name-row">`;
-        html += `<span class="c-name">${esc(c.name)}</span>`;
-        html += `<span class="c-type" style="color:${t.color};background:${t.bg}">${t.label}</span>`;
-        html += `</div>`;
-
-        // Conditions
-        if (c.conditions.length > 0) {
-          html += `<div class="c-conditions">`;
-          c.conditions.forEach(cn => {
-            const cd = CONDITIONS.find(x => x.name === cn);
-            if (cd) html += `<span class="c-cond" style="color:${cd.color};background:${cd.color}18">${cd.icon} ${cd.name}</span>`;
-          });
-          html += `</div>`;
-        }
-
-        // Death Saves
-        if (isDead && c.type === 0) {
-          html += renderDeathSaves(c);
-        }
-
-        html += `</div>`; // c-info
-
-        // AC
-        if (c.ac !== null) {
-          html += `<div class="c-ac"><div class="ac-shield">${c.ac}</div><div class="ac-label">AC</div></div>`;
-        }
-
-        // HP
-        if (c.maxHp !== null) {
-          html += `<button class="c-hp-btn" onclick="openHpEdit('${c.id}')">`;
-          html += `<div class="hp-bar"><div class="hp-fill" style="width:${hpPct}%;background:${hpCol}"></div></div>`;
-          html += `<span class="hp-text" style="color:${hpCol}">${c.hp}${c.tempHp>0?`<span style="color:var(--blue)">+${c.tempHp}</span>`:''}/${c.maxHp}</span>`;
-          html += `</button>`;
-        }
-
-        // Actions
-        html += `<div class="c-actions">`;
-        html += `<button class="c-act${c.conditions.length>0?' has':''}" onclick="openConditions('${c.id}')" title="Conditions">⚡</button>`;
-        html += `<button class="c-act" onclick="confirmRemoveCreature('${c.id}')" title="Remove">✕</button>`;
-        html += `</div>`;
-
-        html += `</div></div>`; // inner, c-row
-      });
-    }
-    html += `</div>`;
-  } else {
-    // ROSTER TAB
-    html += `<div class="roster-list">`;
-    if (state.roster.length === 0) {
-      html += `<div class="empty"><div class="icon">📋</div><div class="t">Roster is empty</div><div>Save characters to quickly add them to encounters</div></div>`;
-    } else {
-      state.roster.forEach(r => {
-        const t = TYPES[r.type];
-        html += `<div class="r-row">`;
-        html += `<div class="r-info">`;
-        html += `<div class="r-name">${esc(r.name)} <span class="c-type" style="color:${t.color};background:${t.bg}">${t.label}</span></div>`;
-        html += `<div class="r-detail">${r.maxHp !== null ? `HP: ${r.maxHp}` : 'No HP set'}${r.ac !== null ? ` · AC: ${r.ac}` : ''}${r.defaultInit ? ` · Init: ${r.defaultInit}` : ''}</div>`;
-        html += `</div>`;
-        html += `<div class="r-actions">`;
-        html += `<button class="r-act add" onclick="addFromRoster('${r.id}')" title="Add to combat">＋</button>`;
-        html += `<button class="r-act" onclick="openEditRoster('${r.id}')" title="Edit">✎</button>`;
-        html += `<button class="r-act" onclick="confirmRemoveRoster('${r.id}')" title="Delete">✕</button>`;
-        html += `</div>`;
-        html += `</div>`;
-      });
-    }
-    html += `</div>`;
-  }
-
-  // Bottom Bar
-  html += `<div class="bottom-bar"><div class="bottom-inner">`;
-  if (state.tab === 'combat') {
-    html += `<button class="btn-main accent" onclick="openAddCreature()">+ Add Creature</button>`;
-    if (!state.combatStarted) {
-      html += `<button class="btn-main green" onclick="startCombat()"${state.creatures.length===0?' disabled':''}>▶ Start</button>`;
-      if (state.creatures.length > 0) html += `<button class="btn-main ghost" onclick="confirmClearAll()">Clear</button>`;
-    } else {
-      html += `<button class="btn-main red" onclick="endCombat()">⏹ End</button>`;
-    }
-  } else {
-    html += `<button class="btn-main accent" onclick="openAddRoster()">+ New Character</button>`;
-  }
-  html += `</div></div>`;
-
-  // Modal
-  if (state.modal) {
-    html += renderModal();
-  }
-
-  app.innerHTML = html;
+function addLog(text){
+  S.log.push({round:S.round,text,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});
+  saveLog();
 }
 
-function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+// Display order: creatures array IS the display order.
+// We sort it on add/init change, but drag reorder is preserved.
+function sortCreatures(){
+  S.creatures.sort((a,b)=>b.initiative-a.initiative||a.name.localeCompare(b.name));
+  saveC();
+}
+function getDisplay(){
+  if(!S.lairEnabled) return [...S.creatures];
+  // Insert lair action marker at init 20 position
+  const lairObj={id:'__lair__',name:'Lair Action',initiative:20,isLair:true};
+  const result=[];let inserted=false;
+  for(const c of S.creatures){
+    if(!inserted&&c.initiative<=20){result.push(lairObj);inserted=true;}
+    result.push(c);
+  }
+  if(!inserted) result.push(lairObj);
+  return result;
+}
 
-function renderDeathSaves(c) {
-  const ds = c.deathSaves;
-  let h = `<div class="death-saves">`;
-  h += `<div class="ds-group"><span class="ds-label" style="color:var(--green)">✓</span>`;
-  for (let i=0; i<3; i++) {
-    h += `<button class="ds-dot suc${i<ds.successes?' filled':''}" onclick="toggleDS('${c.id}','s',${i})"></button>`;
+// =============================================================
+// RENDER
+// =============================================================
+function render(){
+  const app=document.getElementById('app');
+  const disp=getDisplay();
+  const activeCr=S.combat&&S.activeIdx>=0&&S.activeIdx<disp.length?disp[S.activeIdx]:null;
+  let h='';
+
+  // Header
+  h+=`<div class="hdr"><div><h1>⚔️ Initiative</h1><div class="sub">D&D 2024 Tracker</div></div>`;
+  if(S.combat)h+=`<div class="rnd-box"><div class="num">${S.round}</div><div class="lbl">Round</div></div>`;
+  h+=`</div>`;
+
+  // Tabs
+  h+=`<div class="tabs">`;
+  [{k:'combat',l:'⚔️ Combat'},{k:'roster',l:'📋 Roster'},{k:'encounters',l:'📁 Encounters'},{k:'log',l:'📜 Log'}].forEach(t=>{
+    h+=`<button class="tab${S.tab===t.k?' on':''}" onclick="setTab('${t.k}')">${t.l}</button>`;
+  });
+  h+=`</div>`;
+
+  // Wide layout check
+  const isWide=window.innerWidth>=900;
+
+  if(S.tab==='combat'){
+    // Active banner
+    if(activeCr&&!activeCr.isLair){
+      h+=`<div class="abanner"><div><div class="lbl">Current Turn</div><div class="nm">${esc(activeCr.name)}</div></div>`;
+      h+=`<div class="tbtns"><button class="tbtn" onclick="prevTurn()">◀</button><button class="tbtn go" onclick="nextTurn()">▶</button></div></div>`;
+    } else if(activeCr&&activeCr.isLair){
+      h+=`<div class="abanner"><div><div class="lbl">Current Turn</div><div class="nm">🏰 Lair Action</div></div>`;
+      h+=`<div class="tbtns"><button class="tbtn" onclick="prevTurn()">◀</button><button class="tbtn go" onclick="nextTurn()">▶</button></div></div>`;
+    }
+
+    if(isWide){
+      h+=`<div class="layout-wrap"><div class="layout-main">`;
+      h+=renderCreatureList(disp);
+      h+=`</div><div class="layout-side"><h4>📜 Combat Log</h4><div class="side-log">`;
+      h+=renderLogEntries(20);
+      h+=`</div></div></div>`;
+    } else {
+      h+=renderCreatureList(disp);
+    }
+  } else if(S.tab==='roster'){
+    h+=renderRoster();
+  } else if(S.tab==='encounters'){
+    h+=renderEncounters();
+  } else if(S.tab==='log'){
+    h+=renderLog();
   }
-  h += `</div><div class="ds-group"><span class="ds-label" style="color:var(--red)">✗</span>`;
-  for (let i=0; i<3; i++) {
-    h += `<button class="ds-dot fail${i<ds.failures?' filled':''}" onclick="toggleDS('${c.id}','f',${i})"></button>`;
+
+  // Bottom bar
+  h+=renderBottomBar();
+
+  // Toast
+  if(S.toast){
+    h+=`<div class="toast" onclick="dismissToast()"><div class="tt">${S.toast.title}</div><div class="tb">${S.toast.body}</div></div>`;
   }
-  h += `</div></div>`;
+
+  // Modal
+  if(S.modal) h+=renderModal();
+
+  app.innerHTML=h;
+  initDrag();
+}
+
+function renderCreatureList(disp){
+  let h=`<div class="clist" id="clist">`;
+  if(disp.length===0){
+    h+=`<div class="empty"><div class="ei">⚔️</div><div class="et">No combatants yet</div><div>Add creatures or pull from your roster</div></div>`;
+  } else {
+    disp.forEach((c,i)=>{
+      if(c.isLair){
+        h+=renderLairRow(i);
+        return;
+      }
+      const tp=TYPES[c.type];const isAct=S.combat&&i===S.activeIdx;
+      const isDead=c.maxHp!==null&&c.hp===0;
+      const hpP=c.maxHp?Math.max(0,Math.min(100,(c.hp/c.maxHp)*100)):null;
+      const hpC=hpP>60?'var(--grn)':hpP>30?'var(--ylw)':'var(--red)';
+
+      h+=`<div class="cr ${tp.cls}${isAct?' act':''}${isDead?' dead':''}" data-id="${c.id}" data-idx="${i}">`;
+      if(isAct) h+=`<div class="abar"></div>`;
+      h+=`<div class="inn">`;
+
+      // Drag handle
+      h+=`<div class="drag-h" data-drag="${c.id}">⠿</div>`;
+      // Init badge
+      h+=`<button class="ibadge" onclick="openInitEdit('${c.id}')">${c.initiative}</button>`;
+      // Info
+      h+=`<div class="cinfo"><div class="cnr">`;
+      h+=`<span class="cname">${esc(c.name)}</span>`;
+      h+=`<span class="ctype" style="color:${tp.c};background:${tp.bg}">${tp.l}</span>`;
+      h+=`</div>`;
+
+      // Conditions
+      if(c.conditions.length>0){
+        h+=`<div class="cconds">`;
+        c.conditions.forEach(cn=>{const cd=CONDS.find(x=>x.n===cn);if(cd)h+=`<span class="ccond" style="color:${cd.c};background:${cd.c}18">${cd.i} ${cn}</span>`;});
+        h+=`</div>`;
+      }
+      // Effects (round timers)
+      if(c.effects&&c.effects.length>0){
+        h+=`<div class="ceffs">`;
+        c.effects.forEach(ef=>{h+=`<span class="ceff">⏱ ${esc(ef.name)}: ${ef.rounds}rd<span class="x" onclick="removeEffect('${c.id}','${ef.id}')">✕</span></span>`;});
+        h+=`</div>`;
+      }
+      // Legendary actions
+      if(c.legendary&&c.legendary.max>0){
+        h+=`<div class="cleg"><span class="cleg-lbl">Legendary</span>`;
+        for(let j=0;j<c.legendary.max;j++){
+          h+=`<button class="leg-dot${j<c.legendary.remaining?' filled':''}" onclick="toggleLeg('${c.id}',${j})"></button>`;
+        }
+        h+=`</div>`;
+      }
+      // Death saves
+      if(isDead&&c.type===0) h+=renderDS(c);
+
+      h+=`</div>`; // cinfo
+
+      // AC
+      if(c.ac!==null) h+=`<div class="cac"><div class="ac-sh">${c.ac}</div><div class="ac-lbl">AC</div></div>`;
+      // HP
+      if(c.maxHp!==null){
+        h+=`<button class="chp" onclick="openHp('${c.id}')">`;
+        h+=`<div class="hbar"><div class="hfill" style="width:${hpP}%;background:${hpC}"></div></div>`;
+        h+=`<span class="htxt" style="color:${hpC}">${c.hp}${c.tempHp>0?`<span style="color:var(--blu)">+${c.tempHp}</span>`:''}/${c.maxHp}</span>`;
+        h+=`</button>`;
+      }
+      // Actions
+      h+=`<div class="cacts">`;
+      h+=`<button class="ca${c.conditions.length>0?' has':''}" onclick="openConds('${c.id}')" title="Conditions">⚡</button>`;
+      h+=`<button class="ca" onclick="openEffectAdd('${c.id}')" title="Add Effect">⏱</button>`;
+      h+=`<button class="ca" onclick="dupCreature('${c.id}')" title="Duplicate">⧉</button>`;
+      h+=`<button class="ca" onclick="confirmRm('${c.id}')" title="Remove">✕</button>`;
+      h+=`</div>`;
+
+      h+=`</div></div>`; // inn, cr
+    });
+  }
+  h+=`</div>`;
   return h;
 }
 
-function renderModal() {
-  const m = state.modal;
-  let inner = '';
-
-  switch (m.type) {
-    case 'addCreature':
-    case 'editRoster':
-    case 'addRoster': {
-      const isRoster = m.type === 'addRoster' || m.type === 'editRoster';
-      const isEdit = m.type === 'editRoster';
-      const title = isEdit ? 'Edit Character' : isRoster ? 'New Roster Character' : 'Add Creature';
-      const d = m.data || {};
-      inner += `<h3>${title}</h3>`;
-      inner += `<div class="type-row">`;
-      TYPES.forEach((t, i) => {
-        const sel = (d.type ?? 0) === i;
-        inner += `<button class="type-btn${sel?' sel':''}" style="${sel?`color:${t.color};border-color:${t.color};background:${t.bg}`:''}" onclick="modalSetType(${i})">${t.label}</button>`;
-      });
-      inner += `</div>`;
-      inner += `<input id="m-name" placeholder="Name" value="${esc(d.name||'')}" onkeydown="if(event.key==='Enter')modalSubmit()">`;
-      inner += `<div class="field-row" style="margin-top:12px">`;
-      inner += `<input id="m-init" placeholder="${isRoster?'Default Init':'Initiative'}" type="number" inputmode="numeric" value="${d.initiative??d.defaultInit??''}" onkeydown="if(event.key==='Enter')modalSubmit()">`;
-      inner += `<input id="m-ac" placeholder="AC" type="number" inputmode="numeric" value="${d.ac??''}" onkeydown="if(event.key==='Enter')modalSubmit()">`;
-      inner += `<input id="m-hp" placeholder="Max HP" type="number" inputmode="numeric" value="${d.maxHp??''}" onkeydown="if(event.key==='Enter')modalSubmit()">`;
-      inner += `</div>`;
-      if (!isRoster) {
-        inner += `<div style="margin-top:4px;margin-bottom:-4px"><button style="color:var(--accent-bright);font-size:13px;font-weight:600;padding:6px 0" onclick="openSaveToRosterFromAdd()">💾 Also save to roster</button></div>`;
-      }
-      inner += `<div class="modal-btns">`;
-      inner += `<button class="mbtn-cancel" onclick="closeModal()">Cancel</button>`;
-      if (isRoster && !isEdit) {
-        inner += `<button class="mbtn-green" onclick="modalSubmit()">Save to Roster</button>`;
-      } else if (isEdit) {
-        inner += `<button class="mbtn-primary" onclick="modalSubmit()">Update</button>`;
-      } else {
-        inner += `<button class="mbtn-primary" onclick="modalSubmit()">Add</button>`;
-      }
-      inner += `</div>`;
-      break;
-    }
-    case 'conditions': {
-      const c = state.creatures.find(x => x.id === m.data.id);
-      if (!c) break;
-      inner += `<h3>Conditions</h3><div class="modal-sub">${esc(c.name)}</div>`;
-      inner += `<div class="cond-grid">`;
-      CONDITIONS.forEach(cd => {
-        const on = c.conditions.includes(cd.name);
-        inner += `<button class="cond-btn${on?' on':''}" style="${on?`color:${cd.color};border-color:${cd.color};background:${cd.color}18`:''}" onclick="toggleCondition('${c.id}','${cd.name}')"><span class="cond-icon">${cd.icon}</span>${cd.name}</button>`;
-      });
-      inner += `</div>`;
-      inner += `<div class="modal-btns" style="margin-top:20px"><button class="mbtn-primary" style="flex:1" onclick="closeModal()">Done</button></div>`;
-      break;
-    }
-    case 'hpEdit': {
-      const c = state.creatures.find(x => x.id === m.data.id);
-      if (!c) break;
-      const mode = m.data.mode || 'damage';
-      const modes = [{k:'damage',l:'Damage',c:'var(--red)'},{k:'heal',l:'Heal',c:'var(--green)'},{k:'temp',l:'Temp HP',c:'var(--blue)'}];
-      inner += `<h3>${esc(c.name)}</h3>`;
-      inner += `<div class="modal-sub">HP: ${c.hp}/${c.maxHp}${c.tempHp>0?` (+${c.tempHp} temp)`:''}</div>`;
-      inner += `<div class="hp-modes">`;
-      modes.forEach(md => {
-        const sel = mode === md.k;
-        inner += `<button class="hp-mode${sel?' sel':''}" style="${sel?`color:${md.c};border-color:${md.c};background:${md.c}18`:''}" onclick="hpSetMode('${md.k}')">${md.l}</button>`;
-      });
-      inner += `</div>`;
-      const col = modes.find(md=>md.k===mode).c;
-      inner += `<input class="hp-input" id="m-hp-val" type="number" inputmode="numeric" placeholder="0" value="${m.data.amount||''}" style="border-color:${col}44" onkeydown="if(event.key==='Enter')applyHp()">`;
-      inner += `<button class="mbtn-primary" style="width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:700;background:${col};color:${mode==='heal'||mode==='temp'?'#0b0b18':'#fff'}" onclick="applyHp()">Apply ${modes.find(md=>md.k===mode).l}</button>`;
-      break;
-    }
-    case 'initEdit': {
-      const c = state.creatures.find(x => x.id === m.data.id);
-      if (!c) break;
-      inner += `<h3>${esc(c.name)}</h3>`;
-      inner += `<input class="hp-input" id="m-init-val" type="number" inputmode="numeric" value="${c.initiative}" onkeydown="if(event.key==='Enter')applyInit()">`;
-      inner += `<button class="mbtn-primary" style="width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:700" onclick="applyInit()">Update Initiative</button>`;
-      break;
-    }
-    case 'confirm': {
-      inner += `<h3>${m.data.title}</h3>`;
-      inner += `<div class="confirm-text">${m.data.message}</div>`;
-      inner += `<div class="modal-btns">`;
-      inner += `<button class="mbtn-cancel" onclick="closeModal()">Cancel</button>`;
-      inner += `<button class="mbtn-primary" style="background:var(--red)" onclick="confirmAction()">${m.data.confirmLabel||'Confirm'}</button>`;
-      inner += `</div>`;
-      break;
-    }
-  }
-
-  return `<div class="modal-overlay" onclick="closeModal()"><div class="modal" onclick="event.stopPropagation()">${inner}</div></div>`;
+function renderLairRow(i){
+  const isAct=S.combat&&i===S.activeIdx;
+  let h=`<div class="lair-row${isAct?' act':''}" style="position:relative">`;
+  if(isAct) h+=`<div class="abar" style="position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:55%;background:var(--accgr);border-radius:0 4px 4px 0"></div>`;
+  h+=`<div class="lair-info"><span class="lair-icon">🏰</span><div><span class="lair-name">Lair Action</span><div class="lair-init">Initiative 20</div></div></div>`;
+  h+=`<button class="lair-check ${S.lairUsed?'used':'unused'}" onclick="toggleLairUsed()">${S.lairUsed?'✓':'○'}</button>`;
+  h+=`</div>`;
+  return h;
 }
 
-// =====================================================
-// ACTIONS
-// =====================================================
-function switchTab(t) { state.tab = t; render(); }
+function renderDS(c){
+  const ds=c.deathSaves;
+  let h=`<div class="ds"><div class="dsg"><span class="dsl" style="color:var(--grn)">✓</span>`;
+  for(let i=0;i<3;i++) h+=`<button class="dsd s${i<ds.successes?' f':''}" onclick="togDS('${c.id}','s',${i})"></button>`;
+  h+=`</div><div class="dsg"><span class="dsl" style="color:var(--red)">✗</span>`;
+  for(let i=0;i<3;i++) h+=`<button class="dsd fl${i<ds.failures?' f':''}" onclick="togDS('${c.id}','f',${i})"></button>`;
+  h+=`</div></div>`;
+  return h;
+}
 
-// -- Combat --
-function startCombat() {
-  if (state.creatures.length === 0) return;
-  state.combatStarted = true;
-  state.round = 1;
-  state.activeIndex = 0;
-  saveEncounter(); render();
-}
-function endCombat() {
-  state.combatStarted = false;
-  state.round = 0;
-  state.activeIndex = -1;
-  // Reset death saves and conditions
-  state.creatures.forEach(c => { c.deathSaves = {successes:0,failures:0}; });
-  saveEncounter(); render();
-}
-function nextTurn() {
-  const sorted = getSorted();
-  if (sorted.length === 0) return;
-  if (state.activeIndex >= sorted.length - 1) {
-    state.activeIndex = 0;
-    state.round++;
+function renderRoster(){
+  let h=`<div class="rlist">`;
+  if(S.roster.length===0){
+    h+=`<div class="empty"><div class="ei">📋</div><div class="et">Roster is empty</div><div>Save characters for quick encounter setup</div></div>`;
   } else {
-    state.activeIndex++;
+    S.roster.forEach(r=>{
+      const tp=TYPES[r.type];
+      h+=`<div class="rr"><div class="ri">`;
+      h+=`<div class="rn">${esc(r.name)} <span class="ctype" style="color:${tp.c};background:${tp.bg}">${tp.l}</span></div>`;
+      const parts=[];
+      if(r.maxHp!==null)parts.push(`HP: ${r.maxHp}`);
+      if(r.ac!==null)parts.push(`AC: ${r.ac}`);
+      if(r.defaultInit)parts.push(`Init: ${r.defaultInit}`);
+      if(r.legendary)parts.push(`${r.legendary} Leg. Actions`);
+      h+=`<div class="rd">${parts.length?parts.join(' · '):'No stats set'}</div>`;
+      h+=`</div><div class="racts">`;
+      h+=`<button class="ra add" onclick="addFromRoster('${r.id}')" title="Add to combat">＋</button>`;
+      h+=`<button class="ra" onclick="openEditRoster('${r.id}')" title="Edit">✎</button>`;
+      h+=`<button class="ra" onclick="confirmRmRoster('${r.id}')" title="Delete">✕</button>`;
+      h+=`</div></div>`;
+    });
   }
-  saveEncounter(); render();
+  h+=`</div>`;
+  return h;
 }
-function prevTurn() {
-  const sorted = getSorted();
-  if (sorted.length === 0) return;
-  if (state.activeIndex <= 0) {
-    if (state.round > 1) {
-      state.activeIndex = sorted.length - 1;
-      state.round--;
-    }
+
+function renderEncounters(){
+  let h=`<div class="rlist">`;
+  if(S.encounters.length===0){
+    h+=`<div class="empty"><div class="ei">📁</div><div class="et">No saved encounters</div><div>Save your current combat setup as a reusable encounter</div></div>`;
   } else {
-    state.activeIndex--;
+    S.encounters.forEach(enc=>{
+      const count=enc.templates.reduce((s,t)=>s+(t.qty||1),0);
+      h+=`<div class="rr"><div class="ri">`;
+      h+=`<div class="rn">${esc(enc.name)}</div>`;
+      h+=`<div class="rd">${count} creature${count!==1?'s':''} · ${enc.templates.length} unique</div>`;
+      h+=`</div><div class="racts">`;
+      h+=`<button class="ra add" onclick="loadEncounter('${enc.id}')" title="Load">▶</button>`;
+      h+=`<button class="ra" onclick="confirmRmEnc('${enc.id}')" title="Delete">✕</button>`;
+      h+=`</div></div>`;
+    });
   }
-  saveEncounter(); render();
+  h+=`</div>`;
+  return h;
 }
 
-function openAddCreature() {
-  state.modal = { type:'addCreature', data:{ type:2, name:'', initiative:'', maxHp:'', ac:'', saveToRoster:false } };
-  render();
-  setTimeout(() => { const el = document.getElementById('m-name'); if(el) el.focus(); }, 50);
-}
-
-function openSaveToRosterFromAdd() {
-  if (state.modal && state.modal.type === 'addCreature') {
-    state.modal.data.saveToRoster = !state.modal.data.saveToRoster;
-    // Visual feedback via re-render not needed - just toggle the flag
-    // But let's show it
-    const btn = event.target;
-    if (state.modal.data.saveToRoster) {
-      btn.textContent = '✅ Will save to roster';
-      btn.style.color = 'var(--green)';
-    } else {
-      btn.textContent = '💾 Also save to roster';
-      btn.style.color = 'var(--accent-bright)';
-    }
-  }
-}
-
-function modalSetType(t) {
-  if (state.modal) { state.modal.data.type = t; render(); }
-  setTimeout(() => { const el = document.getElementById('m-name'); if(el) el.focus(); }, 50);
-}
-
-function modalSubmit() {
-  const m = state.modal;
-  if (!m) return;
-  const name = (document.getElementById('m-name')?.value || '').trim();
-  if (!name) return;
-  const init = parseInt(document.getElementById('m-init')?.value) || 0;
-  const hp = document.getElementById('m-hp')?.value;
-  const maxHp = hp === '' || hp === undefined ? null : (parseInt(hp) || 0);
-  const acVal = document.getElementById('m-ac')?.value;
-  const ac = acVal === '' || acVal === undefined ? null : (parseInt(acVal) || 0);
-  const type = m.data.type ?? 0;
-
-  if (m.type === 'addCreature') {
-    const creature = {
-      id: uid(), name, initiative: init, hp: maxHp, maxHp, tempHp: 0,
-      ac, type, conditions: [], deathSaves: { successes:0, failures:0 },
-    };
-    state.creatures.push(creature);
-    if (m.data.saveToRoster) {
-      state.roster.push({ id: uid(), name, type, maxHp, ac, defaultInit: init || null });
-      saveRoster();
-    }
-    saveEncounter();
-    // Keep modal open for batch adding - reset fields
-    m.data.name = ''; m.data.initiative = ''; m.data.maxHp = ''; m.data.ac = ''; m.data.saveToRoster = false;
-    render();
-    setTimeout(() => { const el = document.getElementById('m-name'); if(el) el.focus(); }, 50);
-  } else if (m.type === 'addRoster') {
-    state.roster.push({ id: uid(), name, type, maxHp, ac, defaultInit: init || null });
-    saveRoster();
-    closeModal();
-  } else if (m.type === 'editRoster') {
-    const r = state.roster.find(x => x.id === m.data.id);
-    if (r) { r.name = name; r.type = type; r.maxHp = maxHp; r.ac = ac; r.defaultInit = init || null; }
-    saveRoster();
-    closeModal();
-  }
-}
-
-function addFromRoster(rid) {
-  const r = state.roster.find(x => x.id === rid);
-  if (!r) return;
-  state.creatures.push({
-    id: uid(), name: r.name, initiative: r.defaultInit || 0,
-    hp: r.maxHp, maxHp: r.maxHp, tempHp: 0,
-    ac: r.ac ?? null,
-    type: r.type, conditions: [],
-    deathSaves: { successes:0, failures:0 },
+function renderLogEntries(max){
+  const entries=max?S.log.slice(-max):S.log;
+  if(entries.length===0) return `<div class="empty" style="padding:20px"><div class="et">No log entries yet</div><div>Events are recorded during combat</div></div>`;
+  let h='';
+  [...entries].reverse().forEach(e=>{
+    h+=`<div class="log-e"><span class="lr">R${e.round}</span>${esc(e.text)}<span class="lt">${e.time}</span></div>`;
   });
-  saveEncounter(); render();
+  return h;
 }
 
-function confirmRemoveCreature(id) {
-  const c = state.creatures.find(x => x.id === id);
-  if (!c) return;
-  state.modal = { type:'confirm', data:{
-    title: 'Remove Creature',
-    message: `Remove <strong>${esc(c.name)}</strong> from combat?`,
-    confirmLabel: 'Remove',
-    action: () => removeCreature(id),
-  }};
+function renderLog(){
+  let h=`<div class="log-list">`;
+  h+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0 10px">`;
+  h+=`<span style="font-size:13px;color:var(--t2);font-weight:600">${S.log.length} entries</span>`;
+  if(S.log.length>0) h+=`<button style="font-size:12px;color:var(--red);font-weight:600" onclick="clearLog()">Clear Log</button>`;
+  h+=`</div>`;
+  h+=renderLogEntries(null);
+  h+=`</div>`;
+  return h;
+}
+
+function renderBottomBar(){
+  let h=`<div class="bbar"><div class="binn">`;
+  if(S.tab==='combat'){
+    h+=`<button class="bm acc" onclick="openAddCreature()">+ Add</button>`;
+    if(!S.combat){
+      h+=`<button class="bm grn" onclick="startCombat()"${S.creatures.length===0?' disabled':''}>▶ Start</button>`;
+      if(S.creatures.length>0) h+=`<button class="bm gh" onclick="confirmClearAll()">Clear</button>`;
+    } else {
+      h+=`<button class="bm rd" onclick="endCombat()">⏹ End</button>`;
+    }
+    h+=`<button class="bm gh" onclick="openCombatSettings()">⚙</button>`;
+  } else if(S.tab==='roster'){
+    h+=`<button class="bm acc" onclick="openAddRoster()">+ New Character</button>`;
+  } else if(S.tab==='encounters'){
+    h+=`<button class="bm acc" onclick="openSaveEncounter()"${S.creatures.length===0?' disabled':''}>💾 Save Current</button>`;
+  } else if(S.tab==='log'){
+    // No special bottom bar for log
+    h+=`<button class="bm gh" onclick="setTab('combat')">← Back to Combat</button>`;
+  }
+  h+=`</div></div>`;
+  return h;
+}
+
+function renderModal(){
+  const m=S.modal;let inner='';
+
+  switch(m.type){
+    case 'addCreature':case 'editRoster':case 'addRoster':{
+      const isR=m.type==='addRoster'||m.type==='editRoster';
+      const isEd=m.type==='editRoster';
+      const d=m.data||{};
+      inner+=`<h3>${isEd?'Edit Character':isR?'New Roster Character':'Add Creature'}</h3>`;
+      inner+=`<div class="typr">`;
+      TYPES.forEach((t,i)=>{const s=(d.type??0)===i;inner+=`<button class="tyb${s?' sel':''}" style="${s?`color:${t.c};border-color:${t.c};background:${t.bg}`:''}" onclick="mSetType(${i})">${t.l}</button>`;});
+      inner+=`</div>`;
+      inner+=`<input id="m-name" placeholder="Name" value="${esc(d.name||'')}" onkeydown="if(event.key==='Enter')mSubmit()">`;
+      inner+=`<div class="fr" style="margin-top:10px">`;
+      inner+=`<input id="m-init" placeholder="${isR?'Default Init':'Initiative'}" type="number" inputmode="numeric" value="${d.initiative??d.defaultInit??''}" onkeydown="if(event.key==='Enter')mSubmit()">`;
+      inner+=`<input id="m-ac" placeholder="AC" type="number" inputmode="numeric" value="${d.ac??''}" onkeydown="if(event.key==='Enter')mSubmit()">`;
+      inner+=`</div><div class="fr">`;
+      inner+=`<input id="m-hp" placeholder="Max HP" type="number" inputmode="numeric" value="${d.maxHp??''}" onkeydown="if(event.key==='Enter')mSubmit()">`;
+      if(!isR) inner+=`<input id="m-qty" placeholder="Qty" type="number" inputmode="numeric" value="${d.qty||1}" min="1" style="max-width:80px" onkeydown="if(event.key==='Enter')mSubmit()">`;
+      else inner+=`<input id="m-leg" placeholder="Legendary #" type="number" inputmode="numeric" value="${d.legendary??''}" style="max-width:100px" onkeydown="if(event.key==='Enter')mSubmit()">`;
+      inner+=`</div>`;
+      if(!isR){
+        inner+=`<div class="fr"><input id="m-leg" placeholder="Legendary Actions #" type="number" inputmode="numeric" value="${d.legendary??''}" onkeydown="if(event.key==='Enter')mSubmit()"></div>`;
+        inner+=`<div class="chk-row" onclick="mToggle('saveToRoster')"><div class="chk${d.saveToRoster?' on':''}">✓</div>Also save to roster</div>`;
+      }
+      inner+=`<div class="mbts"><button class="mbc" onclick="closeModal()">Cancel</button>`;
+      inner+=`<button class="${isR&&!isEd?'mbg':'mbp'}" onclick="mSubmit()">${isEd?'Update':isR?'Save':'Add'}</button></div>`;
+      break;
+    }
+    case 'conditions':{
+      const c=S.creatures.find(x=>x.id===m.data.id);if(!c)break;
+      inner+=`<h3>Conditions</h3><div class="mo-sub">${esc(c.name)}</div><div class="cgrid">`;
+      CONDS.forEach(cd=>{const on=c.conditions.includes(cd.n);inner+=`<button class="cbtn${on?' on':''}" style="${on?`color:${cd.c};border-color:${cd.c};background:${cd.c}18`:''}" onclick="togCond('${c.id}','${cd.n}')"><span style="font-size:14px">${cd.i}</span>${cd.n}</button>`;});
+      inner+=`</div><div class="mbts" style="margin-top:18px"><button class="mbp" style="flex:1" onclick="closeModal()">Done</button></div>`;
+      break;
+    }
+    case 'hpEdit':{
+      const c=S.creatures.find(x=>x.id===m.data.id);if(!c)break;
+      const mode=m.data.mode||'damage';
+      const modes=[{k:'damage',l:'Damage',c:'var(--red)'},{k:'heal',l:'Heal',c:'var(--grn)'},{k:'temp',l:'Temp HP',c:'var(--blu)'}];
+      inner+=`<h3>${esc(c.name)}</h3><div class="mo-sub">HP: ${c.hp}/${c.maxHp}${c.tempHp>0?` (+${c.tempHp} temp)`:''}</div>`;
+      inner+=`<div class="hpm">`;
+      modes.forEach(md=>{const s=mode===md.k;inner+=`<button class="hpmb${s?' sel':''}" style="${s?`color:${md.c};border-color:${md.c};background:${md.c}18`:''}" onclick="hpMode('${md.k}')">${md.l}</button>`;});
+      inner+=`</div>`;
+      const col=modes.find(md=>md.k===mode).c;
+      inner+=`<input class="hpi" id="m-hpv" type="number" inputmode="numeric" placeholder="0" value="${m.data.amount||''}" style="border-color:${col}44" onkeydown="if(event.key==='Enter')applyHp()">`;
+      inner+=`<button class="mbp" style="width:100%;padding:13px;border-radius:11px;font-size:14px;font-weight:700;background:${col};color:${mode==='heal'||mode==='temp'?'#0b0b18':'#fff'}" onclick="applyHp()">Apply ${modes.find(md=>md.k===mode).l}</button>`;
+      break;
+    }
+    case 'initEdit':{
+      const c=S.creatures.find(x=>x.id===m.data.id);if(!c)break;
+      inner+=`<h3>${esc(c.name)}</h3>`;
+      inner+=`<input class="hpi" id="m-iv" type="number" inputmode="numeric" value="${c.initiative}" onkeydown="if(event.key==='Enter')applyInit()">`;
+      inner+=`<button class="mbp" style="width:100%;padding:13px;border-radius:11px;font-size:14px;font-weight:700" onclick="applyInit()">Update Initiative</button>`;
+      break;
+    }
+    case 'effectAdd':{
+      const c=S.creatures.find(x=>x.id===m.data.id);if(!c)break;
+      inner+=`<h3>Add Effect</h3><div class="mo-sub">${esc(c.name)}</div>`;
+      inner+=`<input id="m-efn" placeholder="Effect name (e.g. Bless)" value="" onkeydown="if(event.key==='Enter')addEffect()">`;
+      inner+=`<div class="fr" style="margin-top:10px"><input id="m-efr" placeholder="Rounds" type="number" inputmode="numeric" value="10" onkeydown="if(event.key==='Enter')addEffect()"></div>`;
+      inner+=`<div class="mbts"><button class="mbc" onclick="closeModal()">Cancel</button><button class="mbp" onclick="addEffect()">Add Effect</button></div>`;
+      break;
+    }
+    case 'saveEncounter':{
+      inner+=`<h3>Save Encounter</h3><div class="mo-sub">${S.creatures.length} creature${S.creatures.length!==1?'s':''} in combat</div>`;
+      inner+=`<input id="m-enc" placeholder="Encounter name" onkeydown="if(event.key==='Enter')saveEncounter()">`;
+      inner+=`<div class="chk-row" onclick="mToggle('includeLair')"><div class="chk${m.data.includeLair?' on':''}">✓</div>Include Lair Action</div>`;
+      inner+=`<div class="mbts"><button class="mbc" onclick="closeModal()">Cancel</button><button class="mbg" onclick="saveEncounter()">Save</button></div>`;
+      break;
+    }
+    case 'combatSettings':{
+      inner+=`<h3>Combat Settings</h3>`;
+      inner+=`<div class="chk-row" onclick="toggleLair()"><div class="chk${S.lairEnabled?' on':''}">✓</div>Enable Lair Actions (Initiative 20)</div>`;
+      inner+=`<div class="mbts" style="margin-top:20px"><button class="mbp" style="flex:1" onclick="closeModal()">Done</button></div>`;
+      break;
+    }
+    case 'confirm':{
+      inner+=`<h3>${m.data.title}</h3><div class="ctx">${m.data.msg}</div>`;
+      inner+=`<div class="mbts"><button class="mbc" onclick="closeModal()">Cancel</button>`;
+      inner+=`<button class="mbp" style="background:var(--red)" onclick="confirmAction()">${m.data.btn||'Confirm'}</button></div>`;
+      break;
+    }
+  }
+  return `<div class="mov" onclick="closeModal()"><div class="mo" onclick="event.stopPropagation()">${inner}</div></div>`;
+}
+
+// =============================================================
+// ACTIONS
+// =============================================================
+function setTab(t){S.tab=t;render();}
+function closeModal(){S.modal=null;render();}
+function confirmAction(){if(S.modal?.data?.action)S.modal.data.action();}
+
+function showToast(title,body,dur=3000){
+  S.toast={title,body};render();
+  setTimeout(()=>{S.toast=null;render();},dur);
+}
+function dismissToast(){S.toast=null;render();}
+
+// -- Combat Flow --
+function startCombat(){
+  if(S.creatures.length===0)return;
+  S.combat=true;S.round=1;S.activeIdx=0;S.lairUsed=false;
+  addLog('⚔️ Combat started');
+  saveC();render();
+}
+function endCombat(){
+  S.combat=false;S.round=0;S.activeIdx=-1;
+  S.creatures.forEach(c=>{c.deathSaves={successes:0,failures:0};});
+  S.lairUsed=false;
+  addLog('🏁 Combat ended');
+  saveC();render();
+}
+
+function nextTurn(){
+  const disp=getDisplay();if(disp.length===0)return;
+  // Process end of current turn - decrement effects
+  const cur=disp[S.activeIdx];
+  if(cur&&!cur.isLair) decrementEffects(cur.id);
+
+  if(S.activeIdx>=disp.length-1){
+    S.activeIdx=0;S.round++;S.lairUsed=false;
+    addLog(`— Round ${S.round} —`);
+  } else {
+    S.activeIdx++;
+  }
+
+  // Process start of new turn
+  const next=disp[S.activeIdx];
+  if(next&&!next.isLair){
+    // Reset legendary actions at start of creature's turn
+    if(next.legendary) next.legendary.remaining=next.legendary.max;
+    addLog(`▶ ${next.name}'s turn`);
+  } else if(next&&next.isLair){
+    addLog(`▶ Lair Action`);
+  }
+
+  saveC();render();
+}
+
+function prevTurn(){
+  const disp=getDisplay();if(disp.length===0)return;
+  if(S.activeIdx<=0){
+    if(S.round>1){S.activeIdx=disp.length-1;S.round--;}
+  } else {S.activeIdx--;}
+  saveC();render();
+}
+
+function decrementEffects(id){
+  const c=S.creatures.find(x=>x.id===id);if(!c||!c.effects)return;
+  c.effects=c.effects.map(e=>({...e,rounds:e.rounds-1})).filter(e=>{
+    if(e.rounds<=0){addLog(`⏱ ${e.name} expired on ${c.name}`);return false;}
+    return true;
+  });
+}
+
+// -- Add Creature --
+function openAddCreature(){
+  S.modal={type:'addCreature',data:{type:2,name:'',initiative:'',maxHp:'',ac:'',qty:1,legendary:'',saveToRoster:false}};
+  render();setTimeout(()=>document.getElementById('m-name')?.focus(),50);
+}
+
+function mSetType(t){if(S.modal){S.modal.data.type=t;render();setTimeout(()=>document.getElementById('m-name')?.focus(),50);}}
+
+function mToggle(key){
+  if(S.modal){S.modal.data[key]=!S.modal.data[key];render();}
+}
+
+function mSubmit(){
+  const m=S.modal;if(!m)return;
+  const name=(document.getElementById('m-name')?.value||'').trim();if(!name)return;
+  const init=parseInt(document.getElementById('m-init')?.value)||0;
+  const hpV=document.getElementById('m-hp')?.value;
+  const maxHp=hpV===''||hpV===undefined?null:(parseInt(hpV)||0);
+  const acV=document.getElementById('m-ac')?.value;
+  const ac=acV===''||acV===undefined?null:(parseInt(acV)||0);
+  const type=m.data.type??0;
+  const legV=document.getElementById('m-leg')?.value;
+  const leg=legV===''||legV===undefined?null:(parseInt(legV)||null);
+
+  if(m.type==='addCreature'){
+    const qty=Math.max(1,Math.min(20,parseInt(document.getElementById('m-qty')?.value)||1));
+    for(let i=0;i<qty;i++){
+      const suffix=qty>1?` ${i+1}`:'';
+      const creature={
+        id:uid(),name:name+suffix,initiative:init,hp:maxHp,maxHp,tempHp:0,ac,type,
+        conditions:[],deathSaves:{successes:0,failures:0},
+        effects:[],
+        legendary:leg?{max:leg,remaining:leg}:null,
+      };
+      S.creatures.push(creature);
+      addLog(`+ ${creature.name} added`);
+    }
+    if(m.data.saveToRoster){
+      S.roster.push({id:uid(),name,type,maxHp,ac,defaultInit:init||null,legendary:leg});
+      saveR();
+    }
+    sortCreatures();
+    m.data.name='';m.data.initiative='';m.data.maxHp='';m.data.ac='';m.data.qty=1;m.data.legendary='';m.data.saveToRoster=false;
+    render();setTimeout(()=>document.getElementById('m-name')?.focus(),50);
+  } else if(m.type==='addRoster'){
+    S.roster.push({id:uid(),name,type,maxHp,ac,defaultInit:init||null,legendary:leg});
+    saveR();closeModal();
+  } else if(m.type==='editRoster'){
+    const r=S.roster.find(x=>x.id===m.data.id);
+    if(r){r.name=name;r.type=type;r.maxHp=maxHp;r.ac=ac;r.defaultInit=init||null;r.legendary=leg;}
+    saveR();closeModal();
+  }
+}
+
+function addFromRoster(rid){
+  const r=S.roster.find(x=>x.id===rid);if(!r)return;
+  S.creatures.push({
+    id:uid(),name:r.name,initiative:r.defaultInit||0,
+    hp:r.maxHp,maxHp:r.maxHp,tempHp:0,ac:r.ac??null,
+    type:r.type,conditions:[],deathSaves:{successes:0,failures:0},
+    effects:[],legendary:r.legendary?{max:r.legendary,remaining:r.legendary}:null,
+  });
+  addLog(`+ ${r.name} added from roster`);
+  sortCreatures();render();
+}
+
+function dupCreature(id){
+  const c=S.creatures.find(x=>x.id===id);if(!c)return;
+  // Find existing numbered duplicates
+  const base=c.name.replace(/\s*\d+$/,'');
+  const nums=S.creatures.filter(x=>x.name.startsWith(base)).map(x=>{
+    const m2=x.name.match(/(\d+)$/);return m2?parseInt(m2[1]):1;
+  });
+  const next=Math.max(...nums,0)+1;
+  const newC={
+    ...JSON.parse(JSON.stringify(c)),
+    id:uid(),name:`${base} ${next}`,
+    deathSaves:{successes:0,failures:0},
+  };
+  S.creatures.push(newC);
+  addLog(`⧉ ${newC.name} duplicated`);
+  sortCreatures();render();
+}
+
+function confirmRm(id){
+  const c=S.creatures.find(x=>x.id===id);if(!c)return;
+  S.modal={type:'confirm',data:{title:'Remove Creature',msg:`Remove <strong>${esc(c.name)}</strong> from combat?`,btn:'Remove',action:()=>rmCreature(id)}};
+  render();
+}
+function rmCreature(id){
+  const disp=getDisplay();const idx=disp.findIndex(c=>c.id===id);
+  S.creatures=S.creatures.filter(c=>c.id!==id);
+  if(idx<S.activeIdx)S.activeIdx--;
+  else if(idx===S.activeIdx){const nd=getDisplay();if(S.activeIdx>=nd.length)S.activeIdx=0;}
+  if(S.creatures.length===0){S.combat=false;S.round=0;S.activeIdx=-1;}
+  addLog(`- Creature removed`);saveC();closeModal();
+}
+function confirmClearAll(){
+  S.modal={type:'confirm',data:{title:'Clear Encounter',msg:'Remove all creatures and end combat?',btn:'Clear All',action:()=>{S.creatures=[];S.activeIdx=-1;S.round=0;S.combat=false;S.lairEnabled=false;S.lairUsed=false;addLog('🗑 Encounter cleared');saveC();closeModal();}}};
   render();
 }
 
-function removeCreature(id) {
-  const sorted = getSorted();
-  const idx = sorted.findIndex(c => c.id === id);
-  state.creatures = state.creatures.filter(c => c.id !== id);
-  if (idx < state.activeIndex) state.activeIndex--;
-  else if (idx === state.activeIndex && state.activeIndex >= getSorted().length) state.activeIndex = 0;
-  if (state.creatures.length === 0) { state.combatStarted = false; state.round = 0; state.activeIndex = -1; }
-  saveEncounter(); closeModal();
+// -- Roster --
+function openAddRoster(){
+  S.modal={type:'addRoster',data:{type:0,name:'',defaultInit:'',maxHp:'',ac:'',legendary:''}};
+  render();setTimeout(()=>document.getElementById('m-name')?.focus(),50);
 }
-
-function confirmClearAll() {
-  state.modal = { type:'confirm', data:{
-    title: 'Clear Encounter',
-    message: 'Remove all creatures and end combat?',
-    confirmLabel: 'Clear All',
-    action: () => { state.creatures=[]; state.activeIndex=-1; state.round=0; state.combatStarted=false; saveEncounter(); closeModal(); },
-  }};
+function openEditRoster(rid){
+  const r=S.roster.find(x=>x.id===rid);if(!r)return;
+  S.modal={type:'editRoster',data:{id:r.id,type:r.type,name:r.name,maxHp:r.maxHp,ac:r.ac,defaultInit:r.defaultInit,legendary:r.legendary}};
+  render();setTimeout(()=>document.getElementById('m-name')?.focus(),50);
+}
+function confirmRmRoster(rid){
+  const r=S.roster.find(x=>x.id===rid);if(!r)return;
+  S.modal={type:'confirm',data:{title:'Delete from Roster',msg:`Remove <strong>${esc(r.name)}</strong> from your roster?`,btn:'Delete',action:()=>{S.roster=S.roster.filter(x=>x.id!==rid);saveR();closeModal();}}};
   render();
 }
 
-function confirmRemoveRoster(rid) {
-  const r = state.roster.find(x => x.id === rid);
-  if (!r) return;
-  state.modal = { type:'confirm', data:{
-    title: 'Delete from Roster',
-    message: `Remove <strong>${esc(r.name)}</strong> from your roster? This won't affect creatures already in combat.`,
-    confirmLabel: 'Delete',
-    action: () => { state.roster = state.roster.filter(x => x.id !== rid); saveRoster(); closeModal(); },
-  }};
-  render();
+// -- Encounters --
+function openSaveEncounter(){
+  if(S.creatures.length===0)return;
+  S.modal={type:'saveEncounter',data:{includeLair:S.lairEnabled}};
+  render();setTimeout(()=>document.getElementById('m-enc')?.focus(),50);
 }
-
-function confirmAction() {
-  if (state.modal?.data?.action) state.modal.data.action();
+function saveEncounter(){
+  const name=(document.getElementById('m-enc')?.value||'').trim();if(!name)return;
+  const templates=S.creatures.map(c=>({
+    name:c.name.replace(/\s*\d+$/,''),type:c.type,maxHp:c.maxHp,ac:c.ac,
+    defaultInit:c.initiative,qty:1,
+    legendary:c.legendary?c.legendary.max:null,
+  }));
+  // Merge duplicates
+  const merged=[];
+  templates.forEach(t=>{
+    const existing=merged.find(m2=>m2.name===t.name&&m2.type===t.type&&m2.maxHp===t.maxHp);
+    if(existing){existing.qty++;}
+    else{merged.push({...t});}
+  });
+  S.encounters.push({id:uid(),name,templates:merged,lairEnabled:S.modal.data.includeLair});
+  saveE();closeModal();
+  showToast('💾 Encounter Saved',`"${name}" saved with ${S.creatures.length} creatures`);
 }
-
-function openEditRoster(rid) {
-  const r = state.roster.find(x => x.id === rid);
-  if (!r) return;
-  state.modal = { type:'editRoster', data:{ id:r.id, type:r.type, name:r.name, maxHp:r.maxHp, ac:r.ac, defaultInit:r.defaultInit } };
-  render();
-  setTimeout(() => { const el = document.getElementById('m-name'); if(el) el.focus(); }, 50);
+function loadEncounter(eid){
+  const enc=S.encounters.find(x=>x.id===eid);if(!enc)return;
+  // End current combat if running
+  if(S.combat){S.combat=false;S.round=0;S.activeIdx=-1;}
+  S.creatures=[];
+  enc.templates.forEach(t=>{
+    for(let i=0;i<(t.qty||1);i++){
+      const suffix=(t.qty||1)>1?` ${i+1}`:'';
+      S.creatures.push({
+        id:uid(),name:t.name+suffix,initiative:t.defaultInit||0,
+        hp:t.maxHp,maxHp:t.maxHp,tempHp:0,ac:t.ac??null,
+        type:t.type,conditions:[],deathSaves:{successes:0,failures:0},
+        effects:[],legendary:t.legendary?{max:t.legendary,remaining:t.legendary}:null,
+      });
+    }
+  });
+  S.lairEnabled=enc.lairEnabled||false;S.lairUsed=false;
+  sortCreatures();
+  addLog(`📁 Loaded encounter: ${enc.name}`);
+  S.tab='combat';saveC();render();
+  showToast('▶ Encounter Loaded',`"${enc.name}" loaded`);
 }
-
-function openAddRoster() {
-  state.modal = { type:'addRoster', data:{ type:0, name:'', defaultInit:'', maxHp:'', ac:'' } };
+function confirmRmEnc(eid){
+  const enc=S.encounters.find(x=>x.id===eid);if(!enc)return;
+  S.modal={type:'confirm',data:{title:'Delete Encounter',msg:`Delete <strong>${esc(enc.name)}</strong>?`,btn:'Delete',action:()=>{S.encounters=S.encounters.filter(x=>x.id!==eid);saveE();closeModal();}}};
   render();
-  setTimeout(() => { const el = document.getElementById('m-name'); if(el) el.focus(); }, 50);
 }
 
 // -- Conditions --
-function openConditions(id) {
-  state.modal = { type:'conditions', data:{ id } };
-  render();
-}
-function toggleCondition(id, cond) {
-  const c = state.creatures.find(x => x.id === id);
-  if (!c) return;
-  if (c.conditions.includes(cond)) c.conditions = c.conditions.filter(x => x !== cond);
-  else c.conditions.push(cond);
-  saveEncounter(); render();
+function openConds(id){S.modal={type:'conditions',data:{id}};render();}
+function togCond(id,cond){
+  const c=S.creatures.find(x=>x.id===id);if(!c)return;
+  if(c.conditions.includes(cond)){
+    c.conditions=c.conditions.filter(x=>x!==cond);
+    addLog(`${c.name}: -${cond}`);
+  } else {
+    c.conditions.push(cond);
+    addLog(`${c.name}: +${cond}`);
+  }
+  saveC();render();
 }
 
 // -- HP --
-function openHpEdit(id) {
-  state.modal = { type:'hpEdit', data:{ id, mode:'damage', amount:'' } };
-  render();
-  setTimeout(() => { const el = document.getElementById('m-hp-val'); if(el) el.focus(); }, 50);
-}
-function hpSetMode(mode) {
-  if (state.modal) { state.modal.data.mode = mode; render(); }
-  setTimeout(() => { const el = document.getElementById('m-hp-val'); if(el) el.focus(); }, 50);
-}
-function applyHp() {
-  const m = state.modal;
-  if (!m || m.type !== 'hpEdit') return;
-  const c = state.creatures.find(x => x.id === m.data.id);
-  if (!c) return;
-  const val = parseInt(document.getElementById('m-hp-val')?.value) || 0;
-  if (val === 0) return;
-  const mode = m.data.mode;
+function openHp(id){S.modal={type:'hpEdit',data:{id,mode:'damage',amount:''}};render();setTimeout(()=>document.getElementById('m-hpv')?.focus(),50);}
+function hpMode(mode){if(S.modal){S.modal.data.mode=mode;render();setTimeout(()=>document.getElementById('m-hpv')?.focus(),50);}}
+function applyHp(){
+  const m=S.modal;if(!m||m.type!=='hpEdit')return;
+  const c=S.creatures.find(x=>x.id===m.data.id);if(!c)return;
+  const val=parseInt(document.getElementById('m-hpv')?.value)||0;if(val===0)return;
+  const mode=m.data.mode;
+  let totalDmg=0;
 
-  if (mode === 'damage') {
-    let remaining = val;
-    if (c.tempHp > 0) {
-      const absorbed = Math.min(c.tempHp, remaining);
-      c.tempHp -= absorbed;
-      remaining -= absorbed;
-    }
-    c.hp = Math.max(0, c.hp - remaining);
-  } else if (mode === 'heal') {
-    c.hp = Math.min(c.maxHp, c.hp + val);
-    // Reset death saves on heal
-    if (c.hp > 0) c.deathSaves = { successes:0, failures:0 };
+  if(mode==='damage'){
+    let rem=val;totalDmg=val;
+    if(c.tempHp>0){const abs=Math.min(c.tempHp,rem);c.tempHp-=abs;rem-=abs;}
+    c.hp=Math.max(0,c.hp-rem);
+    addLog(`${c.name} took ${val} damage (HP: ${c.hp}/${c.maxHp})`);
+    if(c.hp===0) addLog(`💀 ${c.name} dropped to 0 HP!`);
+  } else if(mode==='heal'){
+    c.hp=Math.min(c.maxHp,c.hp+val);
+    if(c.hp>0) c.deathSaves={successes:0,failures:0};
+    addLog(`${c.name} healed ${val} (HP: ${c.hp}/${c.maxHp})`);
   } else {
-    c.tempHp = Math.max(c.tempHp, val);
+    c.tempHp=Math.max(c.tempHp,val);
+    addLog(`${c.name} gained ${val} temp HP`);
   }
-  saveEncounter(); closeModal();
+
+  saveC();closeModal();
+
+  // Concentration check
+  if(mode==='damage'&&c.conditions.includes('Concentrating')&&totalDmg>0){
+    const dc=Math.max(10,Math.floor(totalDmg/2));
+    showToast('🔮 Concentration Check!',`${c.name} must make a DC ${dc} CON save`,5000);
+  }
 }
 
 // -- Initiative Edit --
-function openInitEdit(id) {
-  state.modal = { type:'initEdit', data:{ id } };
-  render();
-  setTimeout(() => { const el = document.getElementById('m-init-val'); if(el) { el.focus(); el.select(); } }, 50);
+function openInitEdit(id){S.modal={type:'initEdit',data:{id}};render();setTimeout(()=>{const el=document.getElementById('m-iv');if(el){el.focus();el.select();}},50);}
+function applyInit(){
+  const m=S.modal;if(!m||m.type!=='initEdit')return;
+  const c=S.creatures.find(x=>x.id===m.data.id);if(!c)return;
+  c.initiative=parseInt(document.getElementById('m-iv')?.value)||0;
+  sortCreatures();closeModal();
 }
-function applyInit() {
-  const m = state.modal;
-  if (!m || m.type !== 'initEdit') return;
-  const c = state.creatures.find(x => x.id === m.data.id);
-  if (!c) return;
-  c.initiative = parseInt(document.getElementById('m-init-val')?.value) || 0;
-  saveEncounter(); closeModal();
+
+// -- Effects (Round Timers) --
+function openEffectAdd(id){S.modal={type:'effectAdd',data:{id}};render();setTimeout(()=>document.getElementById('m-efn')?.focus(),50);}
+function addEffect(){
+  const m=S.modal;if(!m)return;
+  const c=S.creatures.find(x=>x.id===m.data.id);if(!c)return;
+  const name=(document.getElementById('m-efn')?.value||'').trim();if(!name)return;
+  const rounds=parseInt(document.getElementById('m-efr')?.value)||1;
+  if(!c.effects) c.effects=[];
+  c.effects.push({id:uid(),name,rounds});
+  addLog(`⏱ ${name} (${rounds}rd) added to ${c.name}`);
+  saveC();closeModal();
+}
+function removeEffect(cid,eid){
+  const c=S.creatures.find(x=>x.id===cid);if(!c||!c.effects)return;
+  c.effects=c.effects.filter(e=>e.id!==eid);
+  saveC();render();
+}
+
+// -- Legendary Actions --
+function toggleLeg(id,idx){
+  const c=S.creatures.find(x=>x.id===id);if(!c||!c.legendary)return;
+  if(idx<c.legendary.remaining) c.legendary.remaining=idx;
+  else c.legendary.remaining=Math.min(c.legendary.max,idx+1);
+  saveC();render();
 }
 
 // -- Death Saves --
-function toggleDS(id, type, idx) {
-  const c = state.creatures.find(x => x.id === id);
-  if (!c) return;
-  const key = type === 's' ? 'successes' : 'failures';
-  if (idx < c.deathSaves[key]) c.deathSaves[key] = idx;
-  else c.deathSaves[key] = Math.min(3, idx + 1);
-  saveEncounter(); render();
+function togDS(id,type,idx){
+  const c=S.creatures.find(x=>x.id===id);if(!c)return;
+  const key=type==='s'?'successes':'failures';
+  if(idx<c.deathSaves[key]) c.deathSaves[key]=idx;
+  else c.deathSaves[key]=Math.min(3,idx+1);
+  saveC();render();
 }
 
-function closeModal() { state.modal = null; render(); }
+// -- Lair --
+function toggleLairUsed(){S.lairUsed=!S.lairUsed;saveC();render();}
+function openCombatSettings(){S.modal={type:'combatSettings',data:{}};render();}
+function toggleLair(){S.lairEnabled=!S.lairEnabled;saveC();render();}
 
-// =====================================================
+// -- Log --
+function clearLog(){S.log=[];saveLog();render();}
+
+// =============================================================
+// DRAG TO REORDER
+// =============================================================
+let dragState=null;
+let dragGhost=null;
+
+function initDrag(){
+  // Remove old listeners and re-attach
+  document.querySelectorAll('.drag-h').forEach(h=>{
+    h.addEventListener('touchstart',dragStart,{passive:false});
+    h.addEventListener('mousedown',dragStartMouse);
+  });
+}
+
+function dragStart(e){
+  const handle=e.target.closest('.drag-h');if(!handle)return;
+  const row=handle.closest('.cr');if(!row)return;
+  e.preventDefault();
+  const id=row.dataset.id;
+  const rect=row.getBoundingClientRect();
+  const touch=e.touches[0];
+
+  dragState={
+    id,startY:touch.clientY,offsetY:touch.clientY-rect.top,
+    rowH:rect.height+7,element:row,rect,
+    startIdx:S.creatures.findIndex(x=>x.id===id),
+  };
+
+  // Create ghost
+  dragGhost=row.cloneNode(true);
+  dragGhost.classList.add('drag-ghost');
+  dragGhost.style.width=rect.width+'px';
+  dragGhost.style.left=rect.left+'px';
+  dragGhost.style.top=(touch.clientY-dragState.offsetY)+'px';
+  document.body.appendChild(dragGhost);
+  row.classList.add('dragging');
+
+  document.addEventListener('touchmove',dragMove,{passive:false});
+  document.addEventListener('touchend',dragEnd);
+}
+
+function dragStartMouse(e){
+  const handle=e.target.closest('.drag-h');if(!handle)return;
+  const row=handle.closest('.cr');if(!row)return;
+  e.preventDefault();
+  const id=row.dataset.id;
+  const rect=row.getBoundingClientRect();
+
+  dragState={
+    id,startY:e.clientY,offsetY:e.clientY-rect.top,
+    rowH:rect.height+7,element:row,rect,
+    startIdx:S.creatures.findIndex(x=>x.id===id),
+  };
+
+  dragGhost=row.cloneNode(true);
+  dragGhost.classList.add('drag-ghost');
+  dragGhost.style.width=rect.width+'px';
+  dragGhost.style.left=rect.left+'px';
+  dragGhost.style.top=(e.clientY-dragState.offsetY)+'px';
+  document.body.appendChild(dragGhost);
+  row.classList.add('dragging');
+
+  document.addEventListener('mousemove',dragMoveMouse);
+  document.addEventListener('mouseup',dragEndMouse);
+}
+
+function dragMove(e){
+  if(!dragState)return;
+  e.preventDefault();
+  const touch=e.touches[0];
+  if(dragGhost) dragGhost.style.top=(touch.clientY-dragState.offsetY)+'px';
+  checkSwap(touch.clientY);
+}
+
+function dragMoveMouse(e){
+  if(!dragState)return;
+  e.preventDefault();
+  if(dragGhost) dragGhost.style.top=(e.clientY-dragState.offsetY)+'px';
+  checkSwap(e.clientY);
+}
+
+function checkSwap(clientY){
+  const rows=document.querySelectorAll('.cr[data-id]');
+  rows.forEach(row=>{
+    if(row.dataset.id===dragState.id)return;
+    const rect=row.getBoundingClientRect();
+    const mid=rect.top+rect.height/2;
+    if(Math.abs(clientY-mid)<rect.height/2){
+      const fromIdx=S.creatures.findIndex(x=>x.id===dragState.id);
+      const toIdx=S.creatures.findIndex(x=>x.id===row.dataset.id);
+      if(fromIdx!==-1&&toIdx!==-1&&fromIdx!==toIdx){
+        const item=S.creatures.splice(fromIdx,1)[0];
+        S.creatures.splice(toIdx,0,item);
+        // Re-render list but preserve ghost
+        const ghost=dragGhost;
+        const ghostTop=ghost?ghost.style.top:null;
+        saveC();render();
+        // Restore ghost
+        if(ghost&&ghostTop){
+          dragGhost=ghost;
+          document.body.appendChild(dragGhost);
+          dragGhost.style.top=ghostTop;
+          // Mark new element as dragging
+          const newRow=document.querySelector(`.cr[data-id="${dragState.id}"]`);
+          if(newRow){newRow.classList.add('dragging');dragState.element=newRow;}
+        }
+      }
+    }
+  });
+}
+
+function dragEnd(e){
+  cleanupDrag();
+  document.removeEventListener('touchmove',dragMove);
+  document.removeEventListener('touchend',dragEnd);
+}
+
+function dragEndMouse(e){
+  cleanupDrag();
+  document.removeEventListener('mousemove',dragMoveMouse);
+  document.removeEventListener('mouseup',dragEndMouse);
+}
+
+function cleanupDrag(){
+  if(dragGhost){dragGhost.remove();dragGhost=null;}
+  if(dragState?.element) dragState.element.classList.remove('dragging');
+  dragState=null;
+  render();
+}
+
+// =============================================================
 // INIT
-// =====================================================
-loadRoster();
-loadEncounter();
+// =============================================================
+loadR();loadE();loadC();loadLog();
 render();
+window.addEventListener('resize',()=>render());
 </script>
 </body>
 </html>
